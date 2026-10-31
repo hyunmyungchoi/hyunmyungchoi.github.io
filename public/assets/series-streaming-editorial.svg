@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">스트리밍 — 방송과 회의의 두 전송 경로</title>
+  <desc id="desc">위쪽은 RTMP 입력을 FFmpeg에서 변환하여 HLS/DASH로 제공하는 방송 경로, 아래쪽은 WebRTC 입력을 SFU에서 여러 참가자에게 전달하는 회의 경로.</desc>
+  <path fill="#e9e7e2" d="M0 0h1200v600H0z"/>
+  <path fill="#f8f6ed" d="M103 87l986 14-8 206-985-12zM100 328l987-8 3 209-987 8z"/>
+  <g fill="none" stroke="#252823" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M161 124l143 2-1 94-144-1zM187 233h89M164 136l136 2"/>
+    <path d="M325 173l154 1m-15-10 15 10-15 9M504 130l174-1 2 90-174 2zM700 174l141-1m-15-9 15 9-15 10"/>
+    <path d="M870 129h54v90h-54zm70 0h54v90h-54zm70 0h54v90h-54z"/>
+    <path d="M163 366l144 1-1 94-143-1zM326 411l154 1m-15-10 15 10-15 9M590 355l66 55-63 55-66-53z"/>
+    <path d="M674 411h102m-1-1v-52h92m-93 52h93m-92 0v59h92m-14-120 14 9-14 9m0 34 14 9-14 9m0 40 14 9-14 9"/>
+    <path d="M884 337h144v42H884zm0 54h144v42H884zm0 58h144v42H884z"/>
+  </g>
+  <path d="M215 149l36 26-36 24zM216 387l36 26-36 24z" fill="#b34e37"/>
+  <path d="M886 155v38m70-38v38m70-38v38" stroke="#b34e37" stroke-width="5"/>
+  <g font-family="Consolas,monospace" font-size="28" fill="#252823" text-anchor="middle">
+    <text x="234" y="277">RTMP</text><text x="592" y="184">FFmpeg</text><text x="966" y="277">HLS/DASH</text>
+    <text x="235" y="512">WebRTC</text><text x="592" y="420">SFU</text>
+  </g>
+  <path d="M889 358h86m-86 54h47m-47 58h103" stroke="#a7aaa0" stroke-width="3"/>
+  <path d="M71 93l-19 21m17 8-28 4M1115 480l26 7m-27 16 24 9" fill="none" stroke="#252823" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

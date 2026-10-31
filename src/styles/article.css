@@ -1,0 +1,71 @@
+/* Shared with the existing home: neutral colors, small header, no extra panels. */
+.article-layout { display: grid; grid-template-columns: minmax(0, 760px) minmax(0, 248px); gap: 76px; padding-top: 32px; }
+.article-column { min-width: 0; }
+.article-return { min-height: 44px; margin-bottom: 24px; }
+.article-heading { padding-bottom: 30px; border-bottom: 1px solid var(--line); }
+.article-heading h1 { margin: 14px 0 20px; font-family: var(--display-font); font-size: 40px; font-weight: 400; line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
+.article-deck { font-size: 17px; line-height: 1.8; color: var(--secondary); word-break: keep-all; }
+.article-cover { margin: 28px 0 0; }
+.article-cover img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: contain; }
+.draft-notice { margin-top: 24px; padding-left: 14px; border-left: 2px solid var(--ink); color: var(--secondary); font-size: 13px; }
+.article-body { margin-top: 36px; font-size: 17px; line-height: 1.95; overflow-wrap: anywhere; }
+.article-body > :first-child { margin-top: 0; }
+.article-body p, .article-body ul, .article-body ol, .article-body pre, .article-body blockquote, .article-body .table-scroll { margin: 22px 0; }
+.article-body h2 { margin: 56px 0 20px; font-size: 27px; line-height: 1.5; letter-spacing: -.035em; }
+.article-body h3 { margin: 32px 0 16px; font-size: 21px; line-height: 1.5; }
+.article-body h4 { margin: 28px 0 14px; font-size: 18px; }
+.article-body h2, .article-body h3 { scroll-margin-top: 112px; }
+.article-body li + li { margin-top: 8px; }
+.article-body li > p { margin: 8px 0; }
+.article-body a { text-decoration: underline; text-underline-offset: 4px; }
+.article-body a:hover { text-decoration-thickness: 2px; }
+.article-body blockquote { margin-inline: 0; padding: 4px 20px; border-left: 3px solid var(--ink); color: var(--secondary); }
+.article-body blockquote p { margin: 8px 0; }
+.article-body img { display: block; max-width: 100%; height: auto; margin: 28px auto; }
+.article-body pre { position: relative; max-width: 100%; overflow: auto; padding: 22px 24px; background: #111111; color: #f5f5f5; border: 1px solid #333333; border-radius: 4px; font: 14px/1.8 "JetBrains Mono", Consolas, ui-monospace, monospace; tab-size: 2; }
+.article-body pre:has(.copy-code) { padding-top: 48px; }
+.article-body code { font-family: "JetBrains Mono", Consolas, ui-monospace, monospace; font-size: .88em; }
+.article-body :not(pre) > code { padding: .12em .3em; background: var(--surface); border: 1px solid var(--line); border-radius: 3px; }
+.article-body pre code { font-size: inherit; }
+.copy-code { position: absolute; top: 6px; right: 8px; min-width: 44px; min-height: 36px; padding: 4px 10px; background: #222222; color: #eeeeee; border: 1px solid #555555; border-radius: 3px; font-size: 12px; }
+.copy-code:hover { color: #ffffff; background: #333333; }
+.article-body .table-scroll { max-width: 100%; overflow-x: auto; }
+.article-body table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.7; }
+.article-body th, .article-body td { padding: 12px 14px; border: 1px solid var(--line); text-align: left; min-width: 100px; }
+.article-body th { background: var(--surface); }
+.article-body hr { margin: 40px 0; border: 0; border-top: 1px solid var(--line); }
+.article-toc { min-width: 0; }
+.article-toc nav { position: sticky; top: 120px; max-height: calc(100dvh - 150px); overflow: auto; padding: 4px 4px 12px; }
+.article-toc h2 { margin-bottom: 16px; font-size: 13px; }
+.article-toc a, .mobile-toc a { display: block; padding: 6px 0; color: var(--secondary); font-size: 13px; line-height: 1.65; overflow-wrap: anywhere; }
+.article-toc a:hover, .mobile-toc a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.article-toc .toc-h3, .mobile-toc .toc-h3 { padding-left: 12px; }
+.mobile-toc { display: none; margin-top: 24px; padding-block: 12px; border-block: 1px solid var(--line); }
+.mobile-toc summary { min-height: 32px; cursor: pointer; font-size: 14px; }
+.article-related { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); }
+.article-related h2 { font-size: 16px; margin-bottom: 16px; }
+.article-related a { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; font-size: 15px; }
+.article-related a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.no-posts { color: var(--secondary); padding: 28px 0; }
+.not-found { padding-block: 80px; }
+.not-found h1 { font-size: 30px; margin-bottom: 20px; }
+.not-found p { color: var(--secondary); margin-bottom: 28px; }
+@media (max-width: 1000px) {
+  .article-layout { grid-template-columns: minmax(0,1fr) 200px; gap: 32px; }
+  .article-heading h1 { font-size: 34px; }
+}
+@media (max-width: 760px) {
+  .article-layout { display: block; max-width: 720px; padding-top: 20px; }
+  .article-toc { display: none; }
+  .mobile-toc { display: block; }
+  .article-return { margin-bottom: 16px; }
+  .article-heading h1 { font-size: 30px; }
+  .article-deck, .article-body { font-size: 16px; }
+  .article-body h2 { font-size: 24px; margin-top: 44px; scroll-margin-top: 96px; }
+  .article-body h3 { font-size: 20px; scroll-margin-top: 96px; }
+  .article-body pre { padding: 20px 16px; font-size: 13px; }
+}
+@media (max-width: 450px) {
+  .article-heading h1 { font-size: 28px; }
+  .article-body blockquote { padding-inline: 14px; }
+}

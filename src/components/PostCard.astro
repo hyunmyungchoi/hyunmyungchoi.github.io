@@ -1,0 +1,26 @@
+---
+import { series, seriesNames } from '../data/navigation.js';
+const { post, settings } = Astro.props;
+const artwork = series.find(item => item.id === post.series);
+---
+
+<article class="post" data-post-id={post.slug} data-series={post.series} data-tags={post.tags.join(',')}>
+  <div class="post-top">
+    <button class="series-link" type="button" data-series-filter={post.series}>{seriesNames[post.series]}</button>
+    {!post.published && <span class="draft-label">· {post.hasBody ? '초안' : '작성 예정'}</span>}
+  </div>
+  <div class="post-main">
+    <div class="post-copy">
+      <h2><a class="title-button" href={settings.urlFor(`posts/${post.slug}/`)}>{post.title}</a></h2>
+      <p class="post-summary">{post.summary}</p>
+    </div>
+    <a class="post-cover" href={settings.urlFor(`posts/${post.slug}/`)} tabindex="-1" aria-hidden="true">
+      <img src={settings.urlFor(artwork.cover)} width="160" height="80" alt="" loading="lazy" decoding="async" />
+    </a>
+  </div>
+  <div class="post-meta">
+    {post.published ? <time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time> : <span>미발행</span>}
+    <span class="meta-divider" aria-hidden="true"></span>
+    {post.tags.map(tag => <button class="post-tag" type="button" data-topic={tag}>{tag}</button>)}
+  </div>
+</article>

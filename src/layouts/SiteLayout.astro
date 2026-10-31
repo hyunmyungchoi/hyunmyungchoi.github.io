@@ -1,0 +1,40 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/site.css';
+
+const { settings, title = settings.title, description = settings.description, route = '', preview = false, noindex = false } = Astro.props;
+const canonical = settings.url ? settings.url + settings.urlFor(route) : undefined;
+---
+
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="data:," />
+    <title>{title === settings.title ? `${title} — ${settings.description}` : `${title} — ${settings.title}`}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={route.startsWith('posts/') ? 'article' : 'website'} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    {(preview || noindex) && <meta name="robots" content="noindex,nofollow" />}
+    <script is:inline>
+      try {
+        if (localStorage.getItem('nuxnux-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (_) { /* 저장소가 차단되어도 기본 테마로 표시합니다. */ }
+    </script>
+    <slot name="head" />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+    <SiteHeader settings={settings} home={route === ''} />
+    <main id="main-content"><slot /></main>
+    <SiteFooter settings={settings} preview={preview} />
+    <script>import '../scripts/theme.js';</script>
+  </body>
+</html>

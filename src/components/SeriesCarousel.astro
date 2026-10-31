@@ -1,0 +1,24 @@
+---
+import { series } from '../data/navigation.js';
+const { posts, settings } = Astro.props;
+---
+
+<section class="home-series" id="series" aria-labelledby="home-series-title">
+  <div class="home-section-heading">
+    <h2 id="home-series-title">연재</h2>
+    <div class="series-controls" aria-label="연재 스크롤">
+      <button class="scroll-button" id="series-prev" type="button" aria-label="이전 연재로 스크롤" aria-controls="series-track" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg></button>
+      <button class="scroll-button" id="series-next" type="button" aria-label="다음 연재로 스크롤" aria-controls="series-track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg></button>
+    </div>
+  </div>
+  <div class="home-series-grid" id="series-track" tabindex="0" role="region" aria-label="연재 목록. 좌우 화살표 키로 이동할 수 있습니다.">
+    {series.map(item => {
+      const latest = posts.find(post => post.series === item.id && post.hasBody);
+      return <a class="home-series-entry" href={`#series/${item.id}`} aria-labelledby={`series-${item.id}-title`}>
+        <span class="series-cover"><img src={settings.urlFor(`assets/series-${item.id}.svg`)} width="480" height="160" alt="" decoding="async" /></span>
+        <h3 id={`series-${item.id}-title`}>{item.title}</h3>
+        <p class="series-latest">{latest ? <><span class="series-latest-label">{latest.published ? '최근 글' : '초안'} · </span>{latest.title}</> : <span class="series-latest-label">연재 준비 중</span>}</p>
+      </a>;
+    })}
+  </div>
+</section>

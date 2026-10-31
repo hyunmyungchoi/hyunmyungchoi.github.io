@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">프로모션 — 쿠폰의 상태 전이</title>
+  <desc id="desc">종이 쿠폰 위에 AVAILABLE에서 USED 또는 EXPIRED로 나뉘는 상태 전이를 그린 개념도.</desc>
+  <path fill="#eeeae2" d="M0 0h1200v600H0z"/>
+  <path fill="#d5d0c6" d="M148 140l908 40-16 316-907-42z"/>
+  <path fill="#faf9f3" stroke="#272923" stroke-width="3.5" d="M132 160l919-30 13 303-919 30-2-81c35-3 34-51-3-51l-1-60c35-3 34-49-3-49z"/>
+  <path d="M383 172l7 265" stroke="#a6a297" stroke-width="2.5" stroke-dasharray="6 11"/>
+  <text x="179" y="356" font-family="Georgia,serif" font-size="174" font-style="italic" fill="#b34e37">%</text>
+  <path d="M192 405l137-4" stroke="#272923" stroke-width="2"/>
+  <g fill="#faf9f3" stroke="#272923" stroke-width="3.5">
+    <path d="M491 274c20-6 36 7 35 24-1 18-13 29-31 27-18-2-27-16-25-29 2-11 10-19 21-22z"/>
+    <path d="M709 273c20-4 35 7 35 25-1 18-13 29-31 27-18-1-29-16-26-30 2-10 10-19 22-22z"/>
+    <path d="M925 273c20-4 35 8 34 26-1 18-14 28-31 26-17-2-28-16-25-29 2-12 10-20 22-23z"/>
+    <path d="M536 298l139 1m-14-9 14 9-15 9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M497 263c0-80 435-81 434 0m-8-16 8 16 8-16" fill="none" stroke="#b34e37" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="Consolas,monospace" font-size="25" fill="#272923" text-anchor="middle">
+    <text x="497" y="373">AVAILABLE</text><text x="716" y="373">USED</text><text x="931" y="373">EXPIRED</text>
+    <text x="716" y="188" font-size="23" fill="#b34e37">expires</text>
+  </g>
+  <path d="M82 131c-25 31-28 59-6 82 22 21 43-2 25-15-17-12-37 16-33 34M1089 428l31 13m-28-48 36-5" fill="none" stroke="#272923" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

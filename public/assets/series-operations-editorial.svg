@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">운영 문제 — 실패와 재시도</title>
+  <desc id="desc">요청이 서비스와 저장소로 이동하는 중 끊어진 연결, 서비스로 되돌아오는 재시도와 하단의 추적 경로를 그린 개념도.</desc>
+  <path fill="#e5e8e5" d="M0 0h1200v600H0z"/>
+  <path fill="#f8f7f0" d="M121 112l569 13-8 64 12 58-14 61 15 77-11 91-554 7zM713 127l357-14-4 371-360-9 11-79-14-61 12-62-12-73z"/>
+  <g fill="none" stroke="#272b28" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M181 213l151-3 3 112-153 3zM504 211l157 2-2 111-153-2z"/>
+    <path d="M868 227c0-29 154-29 154 0v85c0 29-154 29-154 0zm0 0c0 29 154 29 154 0"/>
+    <path d="M351 267l136 1m-14-10 14 10-14 9M677 267l51 1m59 0 62-1m-15-9 15 9-15 10"/>
+  </g>
+  <path d="M738 252l29 29m0-29-29 29M946 335c-6 87-363 112-363 6m-9 15 9-15 9 15" fill="none" stroke="#b34e37" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="Consolas,monospace" font-size="27" fill="#272b28" text-anchor="middle">
+    <text x="258" y="275">REQUEST</text><text x="583" y="275">SERVICE</text><text x="945" y="277">STORAGE</text>
+    <text x="772" y="441" font-size="24" fill="#b34e37">retry</text>
+  </g>
+  <path d="M255 339v99m327-100v100m364-98v98M256 454l690-1" fill="none" stroke="#7d887e" stroke-width="2" stroke-dasharray="4 10"/>
+  <g fill="#f8f7f0" stroke="#272b28" stroke-width="2.5"><circle cx="256" cy="454" r="7"/><circle cx="582" cy="454" r="7"/><circle cx="946" cy="454" r="7"/></g>
+  <text x="178" y="513" font-family="Consolas,monospace" font-size="22" fill="#5c675e">trace / 01 — 02 — 03</text>
+  <path d="M97 187l-25 24m20 6-31 6M1101 366l27 11m-29 22 34-1" fill="none" stroke="#272b28" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,26 @@
+---
+import PostCard from './PostCard.astro';
+import Sidebar from './Sidebar.astro';
+const { posts, settings } = Astro.props;
+---
+
+<div class="layout shell" id="latest" hidden>
+  <Sidebar posts={posts} settings={settings} />
+  <section class="feed" id="feed" aria-labelledby="feed-title">
+    <a class="text-link series-return" id="series-return" href="#home" data-return-series hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6" /></svg><span id="home-return-label">연재로 돌아가기</span></a>
+    <div class="feed-heading">
+      <div class="heading-group">
+        <img class="series-context-cover" id="series-context-cover" width="112" height="56" alt="" hidden />
+        <div class="heading-copy">
+          <p class="series-context-label" id="series-context-label" hidden>연재</p>
+          <div class="heading-title-row"><h1 id="feed-title">전체 글</h1><span class="result-count" id="result-count" role="status" aria-live="polite">{posts.length}개</span></div>
+        </div>
+      </div>
+      <label class="search"><span class="sr-only">글 검색</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4.5 4.5" /></svg><input id="search-input" type="search" placeholder="제목, 기술, 연재 검색" autocomplete="off" /></label>
+    </div>
+    <div class="filter-state" id="filter-state" hidden><span id="filter-label"></span><button class="reset-button" type="button" id="reset-filter">전체 글 보기</button></div>
+    <div class="post-list" id="post-list">{posts.map(post => <PostCard post={post} settings={settings} />)}</div>
+    <div class="empty-state" id="empty-state" hidden={posts.length > 0}><h2 id="empty-title">아직 발행된 글이 없습니다.</h2><p id="empty-description">글이 발행되면 이곳에서 읽을 수 있습니다.</p></div>
+    <p class="list-end" id="list-end" hidden={posts.length === 0}>모든 글을 확인했습니다.</p>
+  </section>
+</div>

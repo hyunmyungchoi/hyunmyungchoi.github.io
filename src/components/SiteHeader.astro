@@ -1,0 +1,20 @@
+---
+const { settings, home = false } = Astro.props;
+const prefix = home ? '' : settings.urlFor('');
+---
+
+<div class="header-wrap">
+  <header class="site-header shell">
+    <a class="wordmark" href={`${prefix}#home`} aria-label={`${settings.title} 홈`}>{settings.title}</a>
+    <div class="header-right">
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href={`${prefix}#home`} aria-current={home ? 'page' : undefined}>홈</a>
+        <a href={`${prefix}#latest`} aria-current={!home ? 'page' : undefined}>글</a>
+      </nav>
+      <button class="theme-button" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환" aria-pressed="false">
+        <svg class="theme-terminal" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="m7 9 3 3-3 3m6 0h4" /></svg>
+        <svg class="theme-monitor" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2" /><path d="M12 16v5m-4 0h8" /></svg>
+      </button>
+    </div>
+  </header>
+</div>

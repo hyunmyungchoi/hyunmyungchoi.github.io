@@ -1,0 +1,5 @@
+---
+const { headings } = Astro.props;
+---
+
+{headings.map(heading => <a class={`toc-${heading.level}`} href={`#${heading.id}`}>{heading.text}</a>)}

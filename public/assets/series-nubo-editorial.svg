@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">누보 — 문서에서 근거 있는 답변까지</title>
+  <desc id="desc">주거지원 공고 문서에서 필요한 정보를 검색하고 선택한 근거를 집 모양의 답변 카드로 전달하는 개념도.</desc>
+  <path fill="#ede9de" d="M0 0h1200v600H0z"/>
+  <path fill="#d6d1c4" d="M149 168l173-16 18 234-173 16z"/>
+  <path fill="#faf9f3" stroke="#2c302c" stroke-width="3" d="M179 144l174 8-9 244-173-8z"/>
+  <path d="M207 190l114 4m-115 35 113 4m-114 35 114 4m-115 36 112 4m-113 35 77 2" fill="none" stroke="#a5a69b" stroke-width="4"/>
+  <path d="M206 267l113 5" stroke="#b34e37" stroke-width="6"/>
+  <g fill="#faf9f3" stroke="#2c302c" stroke-width="2.5">
+    <path d="M489 178l195 3-1 53-194-2zM488 254l197-1-1 55-195 1zM490 330l193-1 1 55-196 2z"/>
+  </g>
+  <path d="M516 205l139 1m-139 76 108-1m-109 78 138-2" stroke="#a5a69b" stroke-width="4"/>
+  <path d="M517 281l110-1" stroke="#b34e37" stroke-width="6"/>
+  <path fill="#faf9f3" d="M846 254l113-97 122 98-5 154-231-3z"/>
+  <path d="M821 270l139-119 145 119M845 253v155l233-1 4-151M881 301h159m-158 35 157-1m-157 34 111-1" fill="none" stroke="#2c302c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M368 281l103-1m-14-9 14 9-14 10M700 280l119 1m-15-10 15 10-15 9" fill="none" stroke="#2c302c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M304 407c46 65 183 52 245 22 110-54 181 39 291 6 51-15 92-40 104-65" fill="none" stroke="#b34e37" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="945" cy="369" r="6" fill="#b34e37"/>
+  <g font-family="Consolas,monospace" font-size="28" fill="#2c302c" text-anchor="middle">
+    <text x="263" y="493">DOCUMENTS</text><text x="586" y="493">RETRIEVE</text><text x="960" y="493">ANSWER</text>
+  </g>
+  <path d="M1068 139l18-20m8 42 26-7M97 369l21 9m-13 21 23-5" stroke="#2c302c" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,39 @@
+---
+import { series } from '../data/navigation.js';
+const { settings } = Astro.props;
+---
+
+<section class="series-spotlight" id="series" aria-labelledby="home-title" aria-roledescription="carousel">
+  <div class="series-track" id="series-track" tabindex="0" aria-label="연재 표지, 좌우 방향키로 이동">
+    {series.map((item, index) => (
+      <div class="series-panel" id={`panel-${item.id}`} role="group" aria-roledescription="slide" aria-label={`${index + 1} / ${series.length} · ${item.title}`} data-current={String(index === 0)}>
+        <a class="home-series-entry" href={`#series/${item.id}`} aria-labelledby={`series-${item.id}-title`} aria-describedby={`series-${item.id}-disciplines series-${item.id}-sentence`} draggable="false">
+          <span class="series-cover">
+            <img src={settings.urlFor(item.cover)} width="1200" height="600" alt={item.imageAlt} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" fetchpriority={index === 0 ? 'high' : 'auto'} draggable="false" />
+          </span>
+          <div class="series-caption">
+            <span class="series-eyebrow" id={`series-${item.id}-disciplines`}>
+              {item.disciplines.map((discipline, i) => <><span>{discipline}</span>{i < item.disciplines.length - 1 && <span class="discipline-separator" aria-hidden="true">·</span>}</>)}
+            </span>
+            <h2 id={`series-${item.id}-title`}>{item.title}</h2>
+            <p id={`series-${item.id}-sentence`}>{item.sentence}</p>
+            <span class="series-open" aria-hidden="true">연재 읽기 <svg viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></span>
+          </div>
+        </a>
+      </div>
+    ))}
+  </div>
+  <div class="series-controls">
+    <div class="series-pagination" role="group" aria-label="연재 선택">
+      {series.map((item, index) => (
+        <button class="series-select" type="button" data-series-select={index} aria-label={`${item.title} 표지 보기`} aria-controls="series-track" aria-current={index === 0 ? 'true' : undefined}><span aria-hidden="true">{item.shortTitle}</span></button>
+      ))}
+    </div>
+    <div class="series-arrows">
+      <span class="series-position" aria-hidden="true"><span id="series-position">1</span> / {series.length}</span>
+      <button class="series-arrow" type="button" data-series-prev aria-label="이전 연재" aria-controls="series-track" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6" /></svg></button>
+      <button class="series-arrow" type="button" data-series-next aria-label="다음 연재" aria-controls="series-track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></button>
+    </div>
+  </div>
+  <p class="sr-only" id="series-status" role="status" aria-live="polite" aria-atomic="true">{series[0].title}, 1 / {series.length}</p>
+</section>

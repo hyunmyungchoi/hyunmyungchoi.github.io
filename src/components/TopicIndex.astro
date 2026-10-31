@@ -1,0 +1,12 @@
+---
+import { topics } from '../data/navigation.js';
+const { id, posts = [] } = Astro.props;
+const published = posts.filter(post => post.published);
+---
+
+<ul class="topic-list" id={id}>
+  {topics.map(topic => {
+    const count = published.filter(post => post.tags.includes(topic)).length;
+    return <li><button class="topic-button" type="button" data-topic={topic} aria-pressed="false" aria-label={`${topic}, 발행 글 ${count}개`}><span>{topic}</span><span class="topic-count" aria-hidden="true">{count}</span></button></li>;
+  })}
+</ul>

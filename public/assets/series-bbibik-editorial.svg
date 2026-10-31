@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">삐빅 — 감지에서 상태와 알림으로</title>
+  <desc id="desc">이동·정차·주차의 상태 전이와 관찰 시간 구간이 휴대전화 알림으로 이어지는 개념도.</desc>
+  <path fill="#e5e7e7" d="M0 0h1200v600H0z"/>
+  <path fill="#f8f7f0" d="M105 117l744 12-9 359-743-10z"/>
+  <g transform="rotate(-7 248 208)" stroke="#252b28" stroke-width="3" fill="#faf9f2">
+    <path d="M180 183c2-25 127-25 131 0l5 87c-3 24-137 25-138-1z"/>
+    <path d="M196 183c24-11 76-11 98 0l-6 26h-88zm3 66h89l7 18c-26 11-79 11-98 0z" fill="#252b28" stroke="none"/>
+    <path d="M174 189h-9v28h10m141-27h10v28h-9" fill="#252b28"/>
+  </g>
+  <path d="M327 213c37-31 67-31 102-1s57 34 89 0 53-32 87 1 48 25 75-1" transform="translate(0 -34)" fill="none" stroke="#78837d" stroke-width="2.5"/>
+  <g fill="#f8f7f0" stroke="#252b28" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="244" cy="350" r="22"/><circle cx="486" cy="350" r="22"/><circle cx="728" cy="350" r="22"/>
+    <path d="M276 350l178-1m-15-9 15 9-14 10M518 350h178m-15-10 15 10-15 9" fill="none"/>
+  </g>
+  <path d="M485 285v-24l243 1v23M752 350c86 4 102-109 160-109m-16-10 16 10-15 9" fill="none" stroke="#b34e37" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="607" y="242" font-family="Consolas,monospace" font-size="29" text-anchor="middle" fill="#b34e37">Δt</text>
+  <path fill="#faf9f2" stroke="#252b28" stroke-width="3.5" d="M945 145c-12 0-19 8-19 21l-2 236c0 13 8 20 20 20l109 1c13 0 20-9 20-21l-2-236c0-14-7-21-20-21z"/>
+  <path d="M974 164h49m-31 235h15M948 207l101 1-1 80-101-1z" fill="none" stroke="#252b28" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="1059" cy="203" r="23" fill="#b34e37"/>
+  <path d="M1059 192v12m0 8v1" stroke="#faf9f2" stroke-width="3" stroke-linecap="round"/>
+  <g font-family="Consolas,monospace" font-size="28" fill="#252b28" text-anchor="middle">
+    <text x="244" y="416">MOVING</text><text x="486" y="416">STOPPED</text><text x="728" y="416">PARKED</text><text x="1000" y="473">NOTIFY</text>
+  </g>
+  <path d="M166 460l561 1" fill="none" stroke="#a4ada8" stroke-width="2" stroke-dasharray="4 10"/>
+  <path d="M1090 125l17-19m-4 41 26-4" stroke="#252b28" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

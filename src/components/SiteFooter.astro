@@ -1,0 +1,8 @@
+---
+const { settings, preview } = Astro.props;
+---
+
+<footer class="site-footer shell" id="about">
+  <span>{settings.description}</span>
+  <span>{preview ? '로컬 미리보기' : ''}</span>
+</footer>

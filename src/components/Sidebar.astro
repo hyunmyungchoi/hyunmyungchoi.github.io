@@ -1,0 +1,28 @@
+---
+import { series } from '../data/navigation.js';
+import TopicIndex from './TopicIndex.astro';
+import ProfileLinks from './ProfileLinks.astro';
+const { posts, settings } = Astro.props;
+---
+
+<aside class="sidebar" aria-label="연재와 주제 탐색">
+  <details class="category-browser" open>
+    <summary class="category-summary">
+      <span>글 탐색</span><span class="category-current" id="category-current">전체 글</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+    </summary>
+    <div class="category-body">
+      <section class="side-section" id="feed-series" aria-labelledby="series-title">
+        <div class="side-heading"><h2 class="side-title" id="series-title">연재</h2><button class="category-reset" type="button" data-all-posts>전체 글</button></div>
+        <ul class="series-nav">
+          {series.map(item => <li><button class="series-item" type="button" data-series-filter={item.id} aria-pressed="false"><img src={settings.urlFor(item.cover)} width="56" height="35" alt="" loading="lazy" decoding="async" /><span>{item.title}</span></button></li>)}
+        </ul>
+      </section>
+      <section class="side-section" id="topics" aria-labelledby="topics-title">
+        <h2 class="side-title" id="topics-title">INDEX</h2>
+        <TopicIndex posts={posts} />
+      </section>
+      <ProfileLinks className="side-section aside-footer" />
+    </div>
+  </details>
+</aside>

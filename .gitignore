@@ -1,0 +1,18 @@
+/node_modules/
+/dist/
+/.preview/
+/.test-output/
+/.astro/
+/legacy/
+npm-debug.log*
+
+# 환경 변수와 인증 정보
+.env
+.env.*
+!.env.example
+
+# 로컬 검토용 초안. 발행할 때 해당 항목을 제거합니다.
+/src/content/posts/bbibik-start.md
+/src/content/posts/nubo-start.md
+/src/content/posts/operations-lab-start.md
+/src/content/posts/streaming-research-start.md

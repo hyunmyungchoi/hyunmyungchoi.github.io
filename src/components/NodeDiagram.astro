@@ -1,0 +1,16 @@
+<svg viewBox="0 0 358 218" role="img" aria-labelledby="network-title network-desc">
+            <title id="network-title">두 노드 사이의 Pod 패킷 경로</title>
+            <desc id="network-desc">Node A의 Pod A에서 veth와 라우팅, NIC 및 네트워크를 거쳐 Node B의 라우팅과 veth, Pod B로 전달되는 흐름을 단순화한 그림입니다.</desc>
+            <defs><marker id="route-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path class="arrow-tip" d="M0 0 8 4 0 8Z"></path></marker></defs>
+            <rect class="node" x="12" y="14" width="144" height="187" rx="4"></rect><rect class="node" x="202" y="14" width="144" height="187" rx="4"></rect>
+            <text class="node-label" x="27" y="37">NODE A</text><text class="node-label" x="217" y="37">NODE B</text>
+            <rect class="pod" x="33" y="53" width="102" height="43" rx="3"></rect><rect class="pod" x="223" y="53" width="102" height="43" rx="3"></rect>
+            <text class="pod-label" x="84" y="73" text-anchor="middle">Pod A</text><text class="interface-label" x="84" y="87" text-anchor="middle">eth0</text>
+            <text class="pod-label" x="274" y="73" text-anchor="middle">Pod B</text><text class="interface-label" x="274" y="87" text-anchor="middle">eth0</text>
+            <path class="route" d="M84 97v19m0 23v18" marker-end="url(#route-arrow)"></path>
+            <path class="route" d="M274 157v-18m0-23V99" marker-end="url(#route-arrow)"></path>
+            <text x="84" y="130" text-anchor="middle">veth</text><text x="274" y="130" text-anchor="middle">veth</text>
+            <text x="84" y="176" text-anchor="middle">routing</text><text x="274" y="176" text-anchor="middle">routing</text>
+            <path class="route" d="M117 172h122" marker-end="url(#route-arrow)"></path>
+            <text class="node-label" x="179" y="160" text-anchor="middle">NIC ↔ NIC</text>
+          </svg>

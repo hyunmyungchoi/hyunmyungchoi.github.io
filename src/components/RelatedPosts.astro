@@ -1,0 +1,9 @@
+---
+const { posts, settings, series } = Astro.props;
+---
+
+<nav class="article-related" aria-label="같은 연재의 글">
+  <h2>같은 연재</h2>
+  {posts.map(post => <a href={settings.urlFor(`posts/${post.slug}/`)}>{post.title}<span aria-hidden="true">→</span></a>)}
+  <a href={`${settings.urlFor('')}#series/${series}`}>연재 전체 보기 →</a>
+</nav>

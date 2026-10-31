@@ -1,0 +1,45 @@
+:root {
+  color-scheme: light;
+  --paper: #ffffff; --ink: #111111; --secondary: #555555; --quiet: #666666;
+  --line: #e5e5e5; --surface: #f5f5f5; --accent: #000000; --accent-soft: #eeeeee;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --display-font: Georgia, "Noto Serif KR", "Batang", "바탕", serif;
+  --technical-font: "SFMono-Regular", Consolas, "Liberation Mono", "Malgun Gothic", monospace;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #000000; --ink: #ffffff; --secondary: #bdbdbd; --quiet: #aaaaaa;
+  --line: #2b2b2b; --surface: #111111; --accent: #ffffff; --accent-soft: #202020;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 112px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.7 var(--font); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+button { color: inherit; cursor: pointer; border: 0; background: none; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+a:hover, button:hover { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+::selection { background: var(--accent-soft); color: var(--ink); }
+svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+h1, h2, h3, p { margin: 0; }
+.shell { width: min(1120px, calc(100% - 80px)); margin-inline: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip-link { position: absolute; top: 8px; left: 8px; padding: 10px 16px; background: var(--ink); color: var(--paper); z-index: 20; transform: translateY(-150%); }
+.skip-link:focus { transform: translateY(0); }
+
+/* 홈과 글 목록에서 같은 작은 헤더를 사용합니다. */
+.header-wrap { position: sticky; top: 0; z-index: 10; background: var(--paper); }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 32px; height: 86px; }
+.wordmark { font-family: Georgia, "Times New Roman", serif; font-size: 35px; font-weight: 400; letter-spacing: -.065em; line-height: 1; }
+.wordmark:hover { color: var(--ink); }
+.header-right { display: flex; align-items: center; gap: 32px; }
+.nav { display: flex; align-items: center; gap: 28px; }
+.nav a { position: relative; display: flex; align-items: center; min-height: 44px; font-size: 13px; color: var(--secondary); }
+.nav a[aria-current] { color: var(--ink); font-weight: 650; }
+.nav a[aria-current]::after { content: ""; position: absolute; height: 1px; bottom: 5px; left: 0; right: 0; background: var(--ink); }
+.theme-button { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border: 0; border-radius: 0; }
+/* 아이콘은 클릭했을 때 전환할 모드를 나타냅니다. */
+.theme-monitor, [data-theme="dark"] .theme-terminal { display: none; }
+[data-theme="dark"] .theme-monitor { display: block; }

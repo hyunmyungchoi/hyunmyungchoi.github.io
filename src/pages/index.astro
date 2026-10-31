@@ -1,0 +1,20 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import SeriesGallery from '../components/SeriesGallery.astro';
+import HomeIndex from '../components/HomeIndex.astro';
+import PostFeed from '../components/PostFeed.astro';
+import { getSite } from '../lib/posts.js';
+
+const { settings, posts, preview } = await getSite();
+---
+
+<SiteLayout settings={settings} preview={preview}>
+  <noscript slot="head"><style is:inline>#latest[hidden] { display: block !important; } .search, .filter-state, .series-controls { display: none !important; }</style></noscript>
+  <div class="home-page shell" id="home">
+    <h1 class="home-title" id="home-title">연재</h1>
+    <SeriesGallery settings={settings} />
+    <HomeIndex />
+  </div>
+  <PostFeed posts={posts} settings={settings} />
+  <script>import '../scripts/home.js';</script>
+</SiteLayout>

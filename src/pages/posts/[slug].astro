@@ -1,0 +1,41 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
+import { series, seriesNames } from '../../data/navigation.js';
+import { getSite } from '../../lib/posts.js';
+
+export async function getStaticPaths() {
+  const { posts, settings, preview } = await getSite();
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post, settings, preview, related: posts.filter(other => other.series === post.series && other.slug !== post.slug && other.hasBody).slice(0, 3) },
+  }));
+}
+
+const { post, settings, preview, related } = Astro.props;
+const artwork = series.find(item => item.id === post.series);
+---
+
+<SiteLayout settings={settings} title={post.title} description={post.summary} route={`posts/${post.slug}/`} preview={preview} noindex={!post.published}>
+  <article class="article-layout shell" data-post-id={post.slug}>
+    <div class="article-column">
+      <a class="text-link article-return" href={`${settings.urlFor('')}#series/${post.series}`}>← {seriesNames[post.series]}</a>
+      <header class="article-heading">
+        <p class="feature-kicker">{post.tags.join(' · ')}</p>
+        <h1>{post.title}</h1>
+        <p class="article-deck">{post.summary}</p>
+        <div class="post-meta"><span>{settings.author}</span>{post.published ? <time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time> : <span>미발행 초안</span>}</div>
+      </header>
+      <figure class="article-cover">
+        <img src={settings.urlFor(artwork.cover)} width="1200" height="600" alt={artwork.imageAlt} decoding="async" fetchpriority="high" />
+      </figure>
+      {!post.published && <p class="draft-notice" role="note">{post.hasBody ? '검토 전 초안입니다. 실제 배포에는 포함되지 않습니다.' : '작성 예정인 글입니다. 실제 배포에는 포함되지 않습니다.'}</p>}
+      {post.headings.length > 0 && <details class="mobile-toc"><summary>목차</summary><nav aria-label="본문 목차"><TableOfContents headings={post.headings} /></nav></details>}
+      <div class="article-body" set:html={post.html} />
+      <RelatedPosts posts={related} settings={settings} series={post.series} />
+    </div>
+    {post.headings.length > 0 && <aside class="article-toc"><nav aria-label="본문 목차"><h2>목차</h2><TableOfContents headings={post.headings} /></nav></aside>}
+  </article>
+  <script>import '../../scripts/article.js';</script>
+</SiteLayout>
