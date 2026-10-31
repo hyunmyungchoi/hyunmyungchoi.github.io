@@ -4,7 +4,7 @@ import { marked } from 'marked';
 import sanitizeHtml from 'sanitize-html';
 import { ROOT, contained } from './paths.js';
 
-export async function renderMarkdown(markdown, {source, posts = [], urlFor = value => '/' + value, copyAsset} = {}) {
+export async function renderMarkdown(markdown, {source, posts = [], urlFor = value => '/' + value, copyAsset, copyAttachment} = {}) {
   // 페이지 제목은 Markdown 메타데이터에서 표시하므로 첫 H1은 중복하지 않습니다.
   const body = markdown.replace(/^\uFEFF/, '').replace(/^# [^\r\n]+\r?\n+/, '');
   const clean = sanitizeHtml(marked.parse(body, {gfm:true}), {
@@ -37,6 +37,9 @@ export async function renderMarkdown(markdown, {source, posts = [], urlFor = val
     const target = posts.find(post => post.source && path.resolve(ROOT, post.source) === resolved);
     if (target && attribute === 'href') {
       item.attr(attribute, urlFor(`posts/${target.slug}/`) + (hash ? '#' + hash : ''));
+    } else if (attribute === 'href' && /\.pdf$/i.test(resolved) && copyAttachment) {
+      item.attr(attribute, await copyAttachment(resolved) + (hash ? '#' + hash : ''));
+      item.attr('download', path.basename(resolved));
     } else if (attribute === 'src' && copyAsset) {
       item.attr(attribute, await copyAsset(resolved));
     } else {

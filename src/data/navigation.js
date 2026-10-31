@@ -2,7 +2,7 @@ export const series = [
   {
     id: 'promotion', title: '판매자를 위한 프로모션 서비스 개발기', shortTitle: '프로모션', disciplines: ['백엔드', '도메인 설계', '정합성'],
     sentence: '할인 설정부터 쿠폰 사용과 취소, 판매자 비용 추적까지.',
-    cover: 'assets/series-promotion-editorial.svg', imageAlt: '종이 쿠폰 위에 사용 가능 상태에서 사용 완료 또는 만료로 나뉘는 경로를 그린 개념도',
+    cover: 'assets/series-promotion-title-v1.svg', imageAlt: '밝은 회색 배경 중앙에 Promotion 개발기가 적힌 표지',
   },
   {
     id: 'msa', title: '서비스 운영 문제 재현과 개선', shortTitle: '운영 문제', disciplines: ['장애 재현', '분산 시스템', '관측성'],

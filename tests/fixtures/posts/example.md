@@ -23,6 +23,8 @@ printf 'hello, blog\n'
 
 ![작성 예제](../../../src/content/images/example.svg)
 
+[요구사항 PDF](../../../src/content/attachments/_test-fixtures/example.pdf)
+
 ### 관련 내용
 
 - 첫 번째 항목

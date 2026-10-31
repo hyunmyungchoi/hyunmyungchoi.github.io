@@ -43,7 +43,7 @@ test('five series follow the requested titles and order, retaining previous URLs
   assert.match(card, /item.sentence/);
 });
 
-test('five editorial illustrations are self-contained lightweight SVG assets', async () => {
+test('five series covers are self-contained lightweight SVG assets', async () => {
   for (const { cover } of series) {
     const bytes = await fs.readFile('public/' + cover);
     assert.match(bytes.toString(), /viewBox="0 0 1200 600"/);
@@ -58,17 +58,24 @@ test('five editorial illustrations are self-contained lightweight SVG assets', a
   assert.doesNotMatch(await read('src/styles/home.css'), /grayscale/);
 });
 
-test('covers show domain relationships, not unrelated decorative code or logos', async () => {
-  const labels = [
-    ['AVAILABLE', 'USED', 'EXPIRED', 'expires'],
-    ['REQUEST', 'SERVICE', 'STORAGE', 'retry', 'trace'],
-    ['DOCUMENTS', 'RETRIEVE', 'ANSWER'],
-    ['MOVING', 'STOPPED', 'PARKED', 'NOTIFY'],
-    ['RTMP', 'FFmpeg', 'HLS/DASH', 'WebRTC', 'SFU'],
-  ];
-  for (const [i, item] of series.entries()) {
+test('promotion cover is a centered title without the old coupon diagram', async () => {
+  const item = series.find(item => item.id === 'promotion');
+  const source = await read('public/' + item.cover);
+  assert.match(source, /<text x="600" y="300"[^>]*text-anchor="middle"[^>]*>Promotion 개발기<\/text>/);
+  assert.equal((source.match(/<text\b/g) || []).length, 1);
+  assert.doesNotMatch(source, /AVAILABLE|USED|EXPIRED|expires|<image/);
+});
+
+test('other covers keep their domain relationships', async () => {
+  const labels = {
+    msa: ['REQUEST', 'SERVICE', 'STORAGE', 'retry', 'trace'],
+    nubo: ['DOCUMENTS', 'RETRIEVE', 'ANSWER'],
+    bbibik: ['MOVING', 'STOPPED', 'PARKED', 'NOTIFY'],
+    streaming: ['RTMP', 'FFmpeg', 'HLS/DASH', 'WebRTC', 'SFU'],
+  };
+  for (const item of series.filter(item => item.id !== 'promotion')) {
     const source = await read('public/' + item.cover);
-    for (const label of labels[i]) assert.ok(source.includes(label), item.id + ': ' + label);
+    for (const label of labels[item.id]) assert.ok(source.includes(label), item.id + ': ' + label);
     assert.match(source, /개념도|전송 경로/);
   }
 });

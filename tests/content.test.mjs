@@ -40,6 +40,35 @@ test('production filters unpublished posts before rendering and copying images',
   const site = await getSite({ preview: false, directory: 'tests/fixtures/posts' });
   assert.deepEqual(site.posts.map(post => post.slug), ['example']);
   assert.deepEqual([...site.images.keys()], ['src/content/images/example.svg']);
+  assert.deepEqual([...site.attachments.keys()], ['src/content/attachments/_test-fixtures/example.pdf']);
+});
+
+test('PDF attachments are referenced explicitly and drafts never add public files', async () => {
+  const site = await getSite({ preview: true, directory: 'tests/fixtures/posts' });
+  assert.deepEqual([...site.attachments.keys()].sort(), [
+    'src/content/attachments/_test-fixtures/example.pdf',
+    'src/content/attachments/_test-fixtures/private.pdf',
+  ]);
+  const $ = load(site.posts.find(post => post.slug === 'example').html);
+  assert.equal($('a[download]').attr('href'), '/media/src/content/attachments/_test-fixtures/example.pdf');
+  assert.equal($('a[download]').attr('download'), 'example.pdf');
+});
+
+test('PDF links preserve base paths and fragments without allowing arbitrary local links', async () => {
+  const source = 'src/content/posts/example.md';
+  const attachments = [];
+  const result = await renderMarkdown('[PDF](../attachments/example.pdf#page=2)', {
+    source,
+    copyAttachment: async absolute => { attachments.push(absolute); return '/journal/media/example.pdf'; },
+  });
+  const $ = load(result.html);
+  assert.equal($('a').attr('href'), '/journal/media/example.pdf#page=2');
+  assert.equal($('a').attr('download'), 'example.pdf');
+  assert.equal(attachments.length, 1);
+  await assert.rejects(renderMarkdown('[PDF](../attachments/example.pdf)', { source }), /배포에 포함되지/);
+  await assert.rejects(renderMarkdown('[text](../attachments/example.txt)', { source, copyAttachment: async () => '' }), /배포에 포함되지/);
+  await assert.rejects(renderMarkdown('[outside](../../../../outside.pdf)', { source, copyAttachment: async () => '' }), /폴더 밖/);
+  await assert.rejects(getSite({ preview: false, directory: 'tests/fixtures/invalid-attachments' }), /허용되지 않은 본문 첨부/);
 });
 
 test('Markdown keeps tables, code and unique Korean section anchors', async () => {

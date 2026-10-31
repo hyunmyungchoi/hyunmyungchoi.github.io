@@ -81,7 +81,7 @@ for (const basePath of ['', '/journal']) test(`Astro public build works at ${bas
     assert.ok(home('#panel-' + item.id + ' a').attr('aria-describedby').includes(label.attr('id')));
   }
   assert.equal(home('#home .series-caption p').length, 5);
-  assert.ok(home('#home img').toArray().every(element => home(element).attr('src').endsWith('-editorial.svg')));
+  assert.deepEqual(home('#home img').toArray().map(element => home(element).attr('src')), series.map(item => `${basePath}/${item.cover}`));
   assert.equal(home('dialog').length, 0);
   assert.equal(article('h1').text(), '본문 테스트');
   assert.equal(article('.article-cover img').length, 1);
@@ -91,6 +91,14 @@ for (const basePath of ['', '/journal']) test(`Astro public build works at ${bas
   assert.equal(article('link[rel="canonical"]').attr('href'), `https://example.github.io${basePath}/posts/example/`);
   assert.equal(article('.article-body table').length, 1);
   assert.equal(article('.article-body img').length, 1);
+  assert.equal(article('.article-body a[download]').length, 1);
+  assert.equal(article('.article-body a[download]').attr('href'), `${basePath}/media/src/content/attachments/_test-fixtures/example.pdf`);
+  assert.deepEqual(
+    await fs.readFile(path.join(result.directory, 'media/src/content/attachments/_test-fixtures/example.pdf')),
+    await fs.readFile('src/content/attachments/_test-fixtures/example.pdf'),
+  );
+  await assert.rejects(fs.access(path.join(result.directory, 'media/src/content/attachments/_test-fixtures/private.pdf')));
+  await assert.rejects(fs.access(path.join(result.directory, 'media/src/content/attachments/_test-fixtures/unreferenced.pdf')));
   assert.equal(article('meta[name="robots"]').length, 0);
   assert.doesNotMatch(article('.article-body').html(), /<script|onclick|javascript:/);
   assert.doesNotMatch(home.html(), /PRIVATE_TEST|배포하면 안 되는|작성 예정|가장 많이 읽은 글/);
@@ -111,12 +119,15 @@ test('preview renders drafts and planned pages with noindex; next public build r
   const draft = await fs.readFile(path.join(result.directory, 'posts/private-draft/index.html'), 'utf8');
   assert.match(draft, /검토 전 초안|PRIVATE_TEST_BODY_MARKER/);
   assert.match(draft, /noindex,nofollow/);
+  assert.match(draft, /media\/src\/content\/attachments\/_test-fixtures\/private\.pdf/);
+  await fs.access(path.join(result.directory, 'media/src/content/attachments/_test-fixtures/private.pdf'));
   assert.match(await fs.readFile(path.join(result.directory, 'posts/planned/index.html'), 'utf8'), /아직 본문을 작성하지/);
   assert.equal(await fs.readFile(path.join(result.directory, 'robots.txt'), 'utf8'), 'User-agent: *\nDisallow: /\n');
   await assert.rejects(fs.access(path.join(result.directory, 'sitemap.xml')));
   const publicResult = await build('preview-regression');
   assert.equal(publicResult.code, 0, publicResult.output);
   await assert.rejects(fs.access(path.join(result.directory, 'posts/private-draft/index.html')));
+  await assert.rejects(fs.access(path.join(result.directory, 'media/src/content/attachments/_test-fixtures/private.pdf')));
 });
 
 test('empty public build stays empty and cannot deploy without an approved post', async () => {

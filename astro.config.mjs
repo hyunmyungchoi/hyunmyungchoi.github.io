@@ -15,7 +15,8 @@ export default defineConfig({
   output: 'static',
   site: settings.url || undefined,
   base: settings.basePath || '/',
-  trailingSlash: 'always',
+  // HTML 주소는 urlFor()/directory 빌드로 /를 유지하고, 동적 이미지 파일도 개발 서버에서 허용합니다.
+  trailingSlash: 'ignore',
   outDir,
   devToolbar: { enabled: false },
   server: { host: '127.0.0.1', port: 8765 },
@@ -25,9 +26,12 @@ export default defineConfig({
     name: 'blog-content',
     hooks: {
       'astro:server:setup': ({ server }) => {
-        // Markdown은 fs로 읽으므로 편집 시 브라우저 갱신을 명시적으로 알립니다.
+        // fs로 읽은 콘텐츠는 Astro가 자동 추적하지 않으므로 경로 캐시도 함께 비웁니다.
         server.watcher.on('all', (event, filename) => {
           if (['add', 'change', 'unlink'].includes(event) && /[/\\]src[/\\](content|data)[/\\]/.test(filename)) {
+            for (const name of ['ssr', 'prerender']) {
+              server.environments[name]?.hot.send('astro:content-changed', {});
+            }
             server.ws.send({ type: 'full-reload', path: '*' });
           }
         });

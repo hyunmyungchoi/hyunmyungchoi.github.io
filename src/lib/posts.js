@@ -38,7 +38,7 @@ export async function readPosts({ preview = isPreview(), directory = process.env
     if (!entry.name.endsWith('.md')) continue;
     const filename = await safeSource(path.join(directory, entry.name));
     const post = parsePost(await fs.readFile(filename, 'utf8'), entry.name);
-    // 미발행 본문은 렌더링하지 않습니다. 이미지도 공개 빌드로 복사하지 않습니다.
+    // 미발행 본문은 렌더링하지 않습니다. 이미지와 첨부도 공개 빌드로 복사하지 않습니다.
     if (!preview && post.draft) continue;
     posts.push({ ...post, source: path.relative(ROOT, filename).replaceAll('\\', '/') });
   }
@@ -49,6 +49,7 @@ export async function getSite({ preview = isPreview(), directory } = {}) {
   const settings = await getSettings();
   const posts = await readPosts({ preview, directory });
   const images = new Map();
+  const attachments = new Map();
   for (const post of posts) {
     const rendered = post.hasBody ? await renderMarkdown(post.body, {
       source: post.source, posts, urlFor: settings.urlFor,
@@ -61,11 +62,25 @@ export async function getSite({ preview = isPreview(), directory } = {}) {
         images.set(relative, absolute);
         return settings.urlFor('media/' + relative.split('/').map(encodeURIComponent).join('/'));
       },
+      copyAttachment: async absolute => {
+        const relative = path.relative(ROOT, absolute).replaceAll('\\', '/');
+        const folder = path.join(ROOT, 'src/content/attachments');
+        if (!contained(folder, absolute) || !/\.pdf$/i.test(relative)) {
+          throw new Error(`허용되지 않은 본문 첨부: ${relative}`);
+        }
+        const verified = await safeSource(relative);
+        // 허용 폴더 안의 링크가 다른 폴더의 PDF를 가리키는 경우도 차단합니다.
+        if (!contained(await fs.realpath(folder), await fs.realpath(verified))) {
+          throw new Error(`첨부 폴더 밖의 파일: ${relative}`);
+        }
+        attachments.set(relative, verified);
+        return settings.urlFor('media/' + relative.split('/').map(encodeURIComponent).join('/'));
+      },
     }) : { html: '<p>아직 본문을 작성하지 않은 글입니다.</p>', headings: [] };
     Object.assign(post, rendered);
   }
   const metrics = JSON.parse(await fs.readFile(path.join(ROOT, 'src/data/views.json'), 'utf8'));
   const ranked = pickMostRead(posts.map(post => ({ id: post.slug, eligible: post.published })), metrics.views);
   const featured = ranked ? posts[ranked.index] : posts.find(post => post.slug === settings.featuredSlug && post.hasBody) || posts.find(post => post.hasBody);
-  return { settings, posts, images, featured, ranked, preview };
+  return { settings, posts, images, attachments, featured, ranked, preview };
 }

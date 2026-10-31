@@ -22,7 +22,7 @@ const artwork = series.find(item => item.id === post.series);
     <div class="article-column">
       <a class="text-link article-return" href={`${settings.urlFor('')}#series/${post.series}`}>← {seriesNames[post.series]}</a>
       <header class="article-heading">
-        <p class="feature-kicker">{post.tags.join(' · ')}</p>
+        <p class="feature-kicker">{post.tags.join(', ')}</p>
         <h1>{post.title}</h1>
         <p class="article-deck">{post.summary}</p>
         <div class="post-meta"><span>{settings.author}</span>{post.published ? <time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time> : <span>미발행 초안</span>}</div>
