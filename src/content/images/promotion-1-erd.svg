@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="780" viewBox="0 0 960 780" role="img" aria-labelledby="title desc">
+  <title id="title">최소 쇼핑 기능의 일곱 테이블 관계도</title>
+  <desc id="desc">users와 merchants는 merchant_members로 다대다 연결된다. users와 merchants에는 여러 orders가 연결되고 merchants에는 여러 skus가 속한다. orders와 skus는 각각 여러 order_items를 갖는다. 주문 하나에는 전체 취소 기록이 최대 하나 연결된다. 화살표는 부모에서 참조하는 테이블을 향한다.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="m1 1 8 4-8 4" fill="none" stroke="#79858d" stroke-width="1.5" /></marker></defs>
+  <rect width="960" height="780" rx="12" fill="#f7f8f9" />
+  <g font-family="Arial, 'Malgun Gothic', sans-serif" fill="#20252a">
+    <text x="32" y="48" font-size="30" font-weight="700">최소 쇼핑 구조: 계정, 상품, 주문, 취소</text>
+    <g fill="none" stroke="#79858d" stroke-width="2" marker-end="url(#arrow)">
+      <path d="M270 205H328V125H362" />
+      <path d="M690 205H632V125H598" />
+      <path d="M155 260V350H480V407" />
+      <path d="M805 260V407" />
+      <path d="M690 235H655V465H598" />
+      <path d="M365 465H273" />
+      <path d="M480 520V627" />
+      <path d="M805 520V685H598" />
+    </g>
+    <g font-size="21" fill="#59656e">
+      <text x="282" y="177">1:N</text><text x="642" y="177">1:N</text>
+      <text x="270" y="339">구매자 1:N</text><text x="820" y="343">1:N</text>
+      <text x="597" y="381">1:N</text><text x="279" y="451">1:0..1</text>
+      <text x="493" y="581">1:N</text><text x="672" y="672">1:N</text>
+    </g>
+    <g fill="#fff" stroke="#bcc4ca" stroke-width="2">
+      <rect x="40" y="150" width="230" height="110" rx="8" />
+      <rect x="365" y="80" width="230" height="90" rx="8" />
+      <rect x="690" y="150" width="230" height="110" rx="8" />
+      <rect x="690" y="410" width="230" height="110" rx="8" />
+      <rect x="40" y="410" width="230" height="110" rx="8" />
+    </g>
+    <g fill="#fff" stroke="#7493a3" stroke-width="2">
+      <rect x="365" y="410" width="230" height="110" rx="8" />
+      <rect x="365" y="630" width="230" height="110" rx="8" />
+    </g>
+    <text x="60" y="194" font-size="28" font-weight="700">users</text>
+    <text x="60" y="233" font-size="23" fill="#59656e">공통 계정</text>
+    <text x="383" y="116" font-size="21" font-weight="700">merchant_members</text>
+    <text x="383" y="150" font-size="22" fill="#59656e">소속과 역할</text>
+    <text x="710" y="194" font-size="28" font-weight="700">merchants</text>
+    <text x="710" y="233" font-size="23" fill="#59656e">판매처</text>
+    <text x="710" y="454" font-size="28" font-weight="700">skus</text>
+    <text x="710" y="493" font-size="23" fill="#59656e">현재 상품 정보</text>
+    <text x="383" y="454" font-size="28" font-weight="700" fill="#315f76">orders</text>
+    <text x="383" y="493" font-size="23" fill="#59656e">주문과 확정 금액</text>
+    <text x="58" y="454" font-size="21" font-weight="700">order_cancellations</text>
+    <text x="58" y="493" font-size="23" fill="#59656e">전체 취소 기록</text>
+    <text x="383" y="674" font-size="27" font-weight="700" fill="#315f76">order_items</text>
+    <text x="383" y="713" font-size="23" fill="#59656e">주문 당시 스냅샷</text>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="680" viewBox="0 0 720 680" role="img" aria-labelledby="title desc">
+  <title id="title">상품의 현재 정보와 주문 당시의 사실을 구분한다</title>
+  <desc id="desc">주문 확정 시 skus의 상품명과 단가를 order_items에 스냅샷으로 저장한다. 전체 취소 시 orders의 상태를 변경하고 order_cancellations에 요청자, 사유, 시각을 기록한다. 원본 주문과 확정 금액은 유지한다.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="m1 1 8 4-8 4" fill="none" stroke="#5f6c75" stroke-width="1.5" /></marker></defs>
+  <rect width="720" height="680" rx="12" fill="#f7f8f9" />
+  <g font-family="Arial, 'Malgun Gothic', sans-serif" fill="#20252a">
+    <text x="28" y="48" font-size="28" font-weight="700">상태와 거래의 근거를 따로 남깁니다</text>
+    <text x="28" y="105" font-size="24" fill="#59656e">01  주문 확정</text>
+    <rect x="28" y="127" width="292" height="170" rx="8" fill="#fff" stroke="#bcc4ca" stroke-width="2" />
+    <text x="50" y="169" font-size="27" font-weight="700">skus</text>
+    <text x="50" y="217" font-size="25">현재 상품명과 단가</text>
+    <text x="50" y="260" font-size="23" fill="#59656e">이후 변경 가능</text>
+    <path d="M321 212H396" stroke="#5f6c75" stroke-width="2.5" marker-end="url(#arrow)" />
+    <rect x="400" y="127" width="292" height="170" rx="8" fill="#fff" stroke="#7493a3" stroke-width="2" />
+    <text x="422" y="169" font-size="27" font-weight="700" fill="#315f76">order_items</text>
+    <text x="422" y="217" font-size="25">주문 당시 정보</text>
+    <text x="422" y="260" font-size="23" fill="#59656e">상품명 / 단가 / 수량</text>
+    <text x="28" y="357" font-size="24" fill="#59656e">02  전체 취소</text>
+    <rect x="28" y="379" width="292" height="184" rx="8" fill="#fff" stroke="#bcc4ca" stroke-width="2" />
+    <text x="50" y="421" font-size="27" font-weight="700">orders</text>
+    <text x="50" y="469" font-size="25">취소 상태로 변경</text>
+    <text x="50" y="517" font-size="23" fill="#59656e">확정 금액은 유지</text>
+    <path d="M321 471H396" stroke="#5f6c75" stroke-width="2.5" marker-end="url(#arrow)" />
+    <rect x="400" y="379" width="292" height="184" rx="8" fill="#fff" stroke="#7493a3" stroke-width="2" />
+    <text x="422" y="421" font-size="23" font-weight="700" fill="#315f76">order_cancellations</text>
+    <text x="422" y="469" font-size="25">취소 사실 추가</text>
+    <text x="422" y="517" font-size="23" fill="#59656e">요청자 / 사유 / 시각</text>
+    <path d="M28 603H692" stroke="#d9dee2" />
+    <text x="28" y="645" font-size="24" fill="#59656e">원본 주문과 주문 항목은 삭제하지 않습니다.</text>
+  </g>
+</svg>

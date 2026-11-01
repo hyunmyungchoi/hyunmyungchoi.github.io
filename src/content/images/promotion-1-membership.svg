@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="500" viewBox="0 0 720 500" role="img" aria-labelledby="title desc">
+  <title id="title">같은 계정, 판매처마다 다른 권한</title>
+  <desc id="desc">사용자 A는 판매처 100에서 MANAGER, 판매처 200에서 VIEWER다. 계정 정보는 users, 판매처별 소속과 역할은 merchant_members에서 관리한다.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="m1 1 8 4-8 4" fill="none" stroke="#5f6c75" stroke-width="1.5" /></marker></defs>
+  <rect width="720" height="500" rx="12" fill="#f7f8f9" />
+  <g font-family="Arial, 'Malgun Gothic', sans-serif" fill="#20252a">
+    <text x="28" y="48" font-size="28" font-weight="700">같은 계정, 판매처마다 다른 권한</text>
+    <g fill="none" stroke="#5f6c75" stroke-width="2.5" marker-end="url(#arrow)">
+      <path d="M230 245H282V160H338" />
+      <path d="M282 245V340H338" />
+    </g>
+    <rect x="28" y="175" width="202" height="140" rx="8" fill="#fff" stroke="#bcc4ca" stroke-width="2" />
+    <text x="52" y="219" fill="#59656e" font-size="23">users</text>
+    <text x="52" y="269" font-size="32" font-weight="700">사용자 A</text>
+    <rect x="340" y="100" width="352" height="120" rx="8" fill="#fff" stroke="#bcc4ca" stroke-width="2" />
+    <text x="364" y="140" font-size="27">판매처 100</text>
+    <text x="364" y="185" font-size="28" font-weight="700" fill="#315f76">MANAGER</text>
+    <text x="552" y="185" font-size="25" fill="#59656e">운영</text>
+    <rect x="340" y="280" width="352" height="120" rx="8" fill="#fff" stroke="#bcc4ca" stroke-width="2" />
+    <text x="364" y="320" font-size="27">판매처 200</text>
+    <text x="364" y="365" font-size="28" font-weight="700">VIEWER</text>
+    <text x="552" y="365" font-size="25" fill="#59656e">조회</text>
+    <text x="340" y="257" font-size="22" fill="#59656e">소속과 역할: merchant_members</text>
+    <path d="M28 432H692" stroke="#d9dee2" />
+    <text x="28" y="470" font-size="23" fill="#59656e">권한 확인 = 요청 대상 판매처 + 그 판매처에서의 역할</text>
+  </g>
+</svg>
