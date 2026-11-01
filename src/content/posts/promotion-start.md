@@ -33,7 +33,7 @@ GPT에게 개인 프로젝트용 가상 요구사항을 만들어 달라고 요�
 - 행사를 중단하면 이미 발급한 쿠폰은 어떻게 해야 할까?
 - 판매자라는 이유만으로 다른 판매처의 행사까지 수정할 수 있어도 될까?
 
-<img src="../images/promotion-requirements-meme-v2.png" alt="할인율만 곱하면 되겠다고 생각한 회색 후드의 안경 캐릭터 앞에 동시성, 취소, 권한이라는 질문이 쌓이는 두 칸 만화" width="720" height="360">
+<img src="../images/promotion-requirements-meme-v4.png" alt="할인율만 곱하면 되겠다고 생각한 남색 셔츠와 목에 건 헤드셋의 안경 캐릭터 앞에 동시성, 취소, 권한이라는 질문이 쌓이는 두 칸 만화" width="720" height="360">
 
 쿠폰은 하나인데 확인할 것은 하나가 아니었다.
 
@@ -81,7 +81,7 @@ VM 한 대에 2 vCPU와 4GB를 할당한 것은 **작은 환경에서 먼저 구
 
 업무별로 내부 모듈은 나누되, **하나의 애플리케이션으로 묶어 배포하는 모놀리식 구성**으로 시작하기로 했다. 화면도 별도 프런트엔드 앱을 만들지 않고 Thymeleaf를 사용한다. 가격 미리보기처럼 동적인 부분에만 JavaScript를 붙일 계획이다.
 
-<img src="../images/promotion-scope-meme-v2.png" alt="회색 후드의 안경 캐릭터가 Kafka와 Redis, MSA를 한꺼번에 안으려는 모습과 지금 필요한 앱과 DB부터 준비하는 모습을 비교한 두 칸 만화" width="720" height="360">
+<img src="../images/promotion-scope-meme-v4.png" alt="남색 셔츠와 목에 건 헤드셋의 안경 캐릭터가 Kafka와 Redis, MSA를 한꺼번에 안으려는 모습과 지금 필요한 앱과 DB부터 준비하는 모습을 비교한 두 칸 만화" width="720" height="360">
 
 우선 구성은 다음과 같다.
 

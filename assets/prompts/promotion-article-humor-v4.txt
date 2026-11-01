@@ -1,0 +1,32 @@
+Mode: Built-in image_gen compositing edit
+Authoritative character input: assets/characters/navy-shirt-character-original-v2.png
+
+=== promotion-requirements-meme-v4.png ===
+Input image 1: assets/characters/navy-shirt-character-original-v2.png
+Input image 2: src/content/images/promotion-requirements-meme-v3.png
+Use case: compositing
+Asset type: corrected character illustrations for an existing technical blog.
+Input image 1: the FULL-RESOLUTION character source. It is the sole authority for character geometry, face, head-to-body ratio, outline, colours, shading and wardrobe. Treat its figures as supplied artwork to transplant, not a loose style suggestion.
+Input image 2: existing two-panel comic to correct. Use ONLY its captions, divider and symbolic objects as the layout reference. Its current character faces and proportions are WRONG and must be replaced.
+Primary request: transplant the characters from image 1 into this two-panel composition with the original face shapes and body proportions unchanged. The source must be recognizably the SAME drawing, not merely a lookalike in the same clothes.
+Critical geometry: preserve image 1's relatively vertical, narrower face outline, cheek-to-chin silhouette, subtle jaw corners, and the original spacing and sizes of eyes, nose, mouth, thin trapezoid glasses and hairline. DO NOT round or widen cheeks, inflate the skull, shrink the jaw, or use image 2's squat round head. Preserve the source's longish torso and short limbs. In the larger leftmost source figure the entire head INCLUDING hair is roughly 37 percent of the full standing height, NOT over half as in image 2. Uniformly scale the WHOLE source figure, never enlarge the head separately. Keep the head mostly upright as drawn in the source; do not recreate the tilted chubby face from image 2.
+Wardrobe invariants: unchanged navy open shirt, rolled elbow sleeves, single anatomical-right chest pocket (viewer-left), ivory T-shirt, headset around neck, jeans covering all brown boot laces. Keep source colour and medium-weight black outlines, simple cel shading.
+Layout invariants: wide landscape two-panel strip, aspect ratio 2:1, white background, one slim light-grey divider, large readable black headings at the top, pale-sage and grey symbolic objects. Preserve all words verbatim and no extra words. No third panel, character sheet, extra figure, scene or watermark.
+Priority order: 1) exact source character face and proportions; 2) exact text; 3) symbolic-object layout. Pose changes may affect arms only; keep the head and body geometry from image 1.
+Scene: left panel use image 1's ORIGINAL LEFTMOST standing smiling figure, uniformly reduced to fit, with the SAME face and original head-to-body proportions. The only arm adjustment allowed is one hand holding the % coupon. Right panel use image 1's ORIGINAL MIDDLE thinking figure exactly, uniformly smaller, beside the three stacked boxes. Do not use image 2's much larger, rounder heads.
+Exact text: left heading "할인율만 곱하면 되겠지"; right heading "질문이 계속 나온다". Box labels, top to bottom: "동시성", "취소", "권한". Coupon "%". Keep question mark near thinking figure.
+
+=== promotion-scope-meme-v4.png ===
+Input image 1: assets/characters/navy-shirt-character-original-v2.png
+Input image 2: src/content/images/promotion-scope-meme-v3.png
+Use case: compositing
+Asset type: corrected character illustrations for an existing technical blog.
+Input image 1: the FULL-RESOLUTION character source. It is the sole authority for character geometry, face, head-to-body ratio, outline, colours, shading and wardrobe. Treat its figures as supplied artwork to transplant, not a loose style suggestion.
+Input image 2: existing two-panel comic to correct. Use ONLY its captions, divider and symbolic objects as the layout reference. Its current character faces and proportions are WRONG and must be replaced.
+Primary request: transplant the characters from image 1 into this two-panel composition with the original face shapes and body proportions unchanged. The source must be recognizably the SAME drawing, not merely a lookalike in the same clothes.
+Critical geometry: preserve image 1's relatively vertical, narrower face outline, cheek-to-chin silhouette, subtle jaw corners, and the original spacing and sizes of eyes, nose, mouth, thin trapezoid glasses and hairline. DO NOT round or widen cheeks, inflate the skull, shrink the jaw, or use image 2's squat round head. Preserve the source's longish torso and short limbs. In the larger leftmost source figure the entire head INCLUDING hair is roughly 37 percent of the full standing height, NOT over half as in image 2. Uniformly scale the WHOLE source figure, never enlarge the head separately. Keep the head mostly upright as drawn in the source; do not recreate the tilted chubby face from image 2.
+Wardrobe invariants: unchanged navy open shirt, rolled elbow sleeves, single anatomical-right chest pocket (viewer-left), ivory T-shirt, headset around neck, jeans covering all brown boot laces. Keep source colour and medium-weight black outlines, simple cel shading.
+Layout invariants: wide landscape two-panel strip, aspect ratio 2:1, white background, one slim light-grey divider, large readable black headings at the top, pale-sage and grey symbolic objects. Preserve all words verbatim and no extra words. No third panel, character sheet, extra figure, scene or watermark.
+Priority order: 1) exact source character face and proportions; 2) exact text; 3) symbolic-object layout. Pose changes may affect arms only; keep the head and body geometry from image 1.
+Scene: left panel use the original source character's face and body geometry, with ONLY arms adjusted to brace the large three-box stack. Keep the SOURCE head-to-body ratio and facial silhouette, not the old comic's rounded head. Right panel transplant image 1's ORIGINAL LEFTMOST relaxed standing figure EXACTLY with hands in jeans pockets, uniformly reduced to stand beside the App + DB box. Do not change its original face, clothes or proportions.
+Exact text: left heading "하고 싶은 것"; right heading "지금 필요한 것". Three left box labels, top to bottom: "Kafka", "Redis", "MSA". Single right box "App + DB".

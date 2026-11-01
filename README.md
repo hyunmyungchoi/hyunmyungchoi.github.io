@@ -101,7 +101,7 @@ PDF 첨부는 `src/content/attachments/`에 넣고 본문에서 상대 경로로
 
 연재 표지는 1200×600의 직접 편집 가능한 SVG입니다. 프로모션은 `public/assets/series-promotion-title-v1.svg`의 밝은 회색 배경 중앙에 `Promotion 개발기`만 배치합니다. 나머지 네 연재는 `public/assets/series-*-editorial.svg`에서 실패와 재시도, 추적, 문서 검색과 근거 연결, 주차 상태 감지와 알림, 방송과 회의의 두 전송 경로를 표현합니다. 구현 상세도가 아닌 연재 주제의 개념도입니다. 첫 화면은 글의 제목과 요약을 먼저 읽도록 하고, 아래 연재 표지에는 기술 분류와 제목, 짧은 문장을 함께 제공합니다. 페이지 배경은 흰색/검은색이며 표지의 색은 테마 전환 시에도 유지됩니다. 제목은 `--display-font`, 기술 분류는 `--technical-font`, 본문은 `--font`로 분리합니다. 이전 표지는 보존하되 현재 화면에서 사용하지 않습니다. 캐릭터는 기존 본문의 반응 컷으로 유지하며 홈의 주인공으로 확대하지 않습니다.
 
-프로모션 첫 글의 유머 삽화 2장은 `src/content/images/promotion-*-meme-v2.png`입니다. 선택한 회색 후드·검은 뿔테안경 캐릭터로 통일하며, 캐릭터 기준 이미지는 로컬 `assets/characters/hoodie-character-v1.png`에 보관합니다. 본문에서 상대 경로로 참조하며, 빌드 시 사용하는 이미지만 `media/`로 복사됩니다. 생성 프롬프트는 로컬 `assets/prompts/promotion-article-humor-v2.txt`에 있습니다. 이전 v1 이미지는 보존하되 본문에서 사용하지 않습니다.
+프로모션 첫 글의 유머 삽화 2장은 `src/content/images/promotion-*-meme-v4.png`입니다. 남색 무지 셔츠·걷은 소매·얇은 사다리꼴 안경·목에 건 헤드셋·청바지·갈색 워커의 캐릭터로 통일합니다. 고해상도 기준 원본은 `assets/characters/navy-shirt-character-original-v2.png`이며, 원본의 얼굴 윤곽과 머리 대비 몸 비율을 우선 기준으로 편집했습니다. 본문에서 상대 경로로 참조하며, 빌드 시 사용하는 이미지만 `media/`로 복사됩니다. 내장 이미지 생성 도구로 편집했으며 프롬프트는 `assets/prompts/promotion-article-humor-v4.txt`에 있습니다. 이전 v1·v2·v3 이미지는 보존하되 본문에서 사용하지 않습니다.
 이전 구현 파일은 `legacy/blog/`에 보관하며 빌드에서 사용하지 않습니다. `legacy/`는 Git에서 제외됩니다. 사용하지 않는 과거 글 Markdown 23개는 프로젝트 밖의 `D:/Project/GithubBlog-backups/`에 상대 경로를 유지해 백업한 뒤 정리했습니다. 실제 글은 **src/content/posts의 Markdown만 수정**하세요.
 
 홈의 마우스 제스처는 `src/scripts/series-pointer.js`에서 관리합니다. 마우스로 누른 채 좌우로 끌면 표지가 따라오고, 놓으면 연재 단위로 정렬됩니다. 옆에 일부 보이는 연재는 첫 클릭에 메인으로 이동하며, 메인 연재를 다시 클릭하면 글 목록이 열립니다. 드래그 직후의 클릭은 차단하고 터치·트랙패드 스크롤과 Ctrl/⌘+클릭은 브라우저 기본 동작을 유지합니다.
