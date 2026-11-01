@@ -1,0 +1,7 @@
+---
+const { settings, slug, integration } = Astro.props;
+---
+
+{integration && <span class="post-views" data-view-site={integration.site} data-view-path={settings.urlFor(`posts/${slug}/`)} data-production-origin={settings.url} title="중복 방문을 제외한 누적 조회입니다. 공개 집계는 최대 4시간 지연될 수 있습니다.">
+  조회 <span data-view-value aria-live="polite">—</span>
+</span>}

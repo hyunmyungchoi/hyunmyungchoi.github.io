@@ -4,5 +4,15 @@
   "description": "눅눅이의 개인 기술 저널",
   "url": "https://hyunmyungchoi.github.io",
   "basePath": "",
-  "featuredSlug": "promotion-start"
+  "featuredSlug": "promotion-start",
+  "integrations": {
+    "giscus": {
+      "enabled": true,
+      "repo": "hyunmyungchoi/hyunmyungchoi.github.io",
+      "repoId": "R_kgDOVeOs_g",
+      "category": "Announcements",
+      "categoryId": "DIC_kwDOVeOs_s4DKIab"
+    },
+    "goatcounter": { "site": "https://hyunmyungchoi.goatcounter.com" }
+  }
 }

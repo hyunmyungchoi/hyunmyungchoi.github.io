@@ -7,11 +7,11 @@ import { load } from 'cheerio';
 import { series } from '../src/data/navigation.js';
 
 const root = process.cwd();
-async function build(name, { preview = false, basePath = '', fixtures = true, requirePosts = false, site = 'https://example.github.io' } = {}) {
+async function build(name, { preview = false, basePath = '', fixtures = true, requirePosts = false, site = 'https://example.github.io', integrations = false } = {}) {
   const result = await new Promise((resolve, reject) => {
     const child = spawn(process.execPath, ['scripts/build.mjs', ...(preview ? ['--preview'] : []), ...(requirePosts ? ['--require-posts'] : [])], {
       cwd: root,
-      env: { ...process.env, SITE_URL: site, BASE_PATH: basePath, BLOG_OUTPUT: '.test-output/' + name, BLOG_CONTENT_DIR: fixtures ? 'tests/fixtures/posts' : 'tests/fixtures/drafts', ASTRO_TELEMETRY_DISABLED: '1' },
+      env: { ...process.env, SITE_URL: site, BASE_PATH: basePath, BLOG_OUTPUT: '.test-output/' + name, BLOG_CONTENT_DIR: fixtures ? 'tests/fixtures/posts' : 'tests/fixtures/drafts', ASTRO_TELEMETRY_DISABLED: '1', GISCUS_ENABLED: String(integrations), GOATCOUNTER_SITE: integrations ? 'https://example.goatcounter.com' : '' },
     });
     let output = '';
     child.stdout.on('data', data => { output += data; });
@@ -154,4 +154,25 @@ test('deployment only uploads dist after the guarded public build', async () => 
   assert.match(workflow, /--require-posts/);
   assert.match(workflow, /needs: build/);
   assert.doesNotMatch(workflow, /path: \.preview|build:preview|pull_request_target/);
+});
+
+test('configured comments and counters render on public posts, not the homepage or preview drafts', async () => {
+  const result = await build('integrations', { integrations: true, basePath: '/journal' });
+  assert.equal(result.code, 0, result.output);
+  const home = await checkLocalLinks(result.directory, 'index.html', '/journal');
+  const article = await checkLocalLinks(result.directory, 'posts/example/index.html', '/journal');
+  assert.equal(home('[data-comments]').length, 0);
+  assert.equal(article('[data-comments]').length, 1);
+  assert.equal(article('[data-comments]').attr('data-repo'), 'hyunmyungchoi/hyunmyungchoi.github.io');
+  assert.equal(article('.article-heading [data-view-path]').attr('data-view-path'), '/journal/posts/example/');
+  assert.equal(home('#post-list [data-view-path]').attr('data-view-path'), '/journal/posts/example/');
+  assert.equal(article('[data-analytics-site]').attr('data-analytics-site'), 'https://example.goatcounter.com');
+  assert.equal(home('[data-analytics-site]').length, 1);
+  assert.equal(article('[data-view-value]').text(), '—');
+  const preview = await build('integrations-preview', { preview: true, integrations: true });
+  assert.equal(preview.code, 0, preview.output);
+  for (const filename of ['index.html', 'posts/example/index.html', 'posts/private-draft/index.html']) {
+    const page = load(await fs.readFile(path.join(preview.directory, filename), 'utf8'));
+    assert.equal(page('[data-comments], [data-view-site], [data-analytics-site]').length, 0);
+  }
 });

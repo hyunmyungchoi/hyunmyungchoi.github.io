@@ -1,7 +1,10 @@
 ---
 import { series, seriesNames } from '../data/navigation.js';
+import PostViews from './PostViews.astro';
+import { publicIntegrations } from '../lib/integrations.js';
 const { post, settings } = Astro.props;
 const artwork = series.find(item => item.id === post.series);
+const integrations = publicIntegrations(settings, { preview: import.meta.env.DEV || process.env.BLOG_PREVIEW === 'true', noindex: !post.published });
 ---
 
 <article class="post" data-post-id={post.slug} data-series={post.series} data-tags={post.tags.join(',')}>
@@ -22,5 +25,6 @@ const artwork = series.find(item => item.id === post.series);
     {post.published ? <time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time> : <span>미발행</span>}
     <span class="meta-divider" aria-hidden="true"></span>
     {post.tags.map(tag => <button class="post-tag" type="button" data-topic={tag}>{tag}</button>)}
+    <PostViews settings={settings} slug={post.slug} integration={integrations.goatcounter} />
   </div>
 </article>

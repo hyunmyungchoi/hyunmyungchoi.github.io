@@ -1,0 +1,6 @@
+---
+const { settings, integration } = Astro.props;
+---
+
+{integration && <div hidden data-analytics-site={integration.site} data-production-origin={settings.url} />}
+<script>import '../scripts/analytics.js';</script>

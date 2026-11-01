@@ -1,6 +1,8 @@
 ---
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Analytics from '../components/Analytics.astro';
+import { publicIntegrations } from '../lib/integrations.js';
 import '../styles/site.css';
 
 const { settings, title = settings.title, description = settings.description, route = '', preview = false, noindex = false } = Astro.props;
@@ -35,6 +37,7 @@ const canonical = settings.url ? settings.url + settings.urlFor(route) : undefin
     <SiteHeader settings={settings} home={route === ''} />
     <main id="main-content"><slot /></main>
     <SiteFooter settings={settings} preview={preview} />
+    <Analytics settings={settings} integration={publicIntegrations(settings, { preview, noindex }).goatcounter} />
     <script>import '../scripts/theme.js';</script>
   </body>
 </html>

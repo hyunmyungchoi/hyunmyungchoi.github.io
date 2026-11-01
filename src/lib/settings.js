@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ROOT } from './paths.js';
+import { integrationSettings } from './integrations.js';
 
 export function siteSettings(config, overrides = {}) {
   const value = overrides.url ?? config.url;
@@ -16,12 +17,16 @@ export function siteSettings(config, overrides = {}) {
   if (basePath && !/^\/[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(basePath)) {
     throw new Error('BASE_PATH는 /repository 형식이어야 합니다.');
   }
-  return { ...config, url, basePath, urlFor: route => `${basePath}/${route.replace(/^\//, '')}` };
+  return { ...config, url, basePath, integrations: integrationSettings(config.integrations, overrides.integrations), urlFor: route => `${basePath}/${route.replace(/^\//, '')}` };
 }
 
 export async function getSettings() {
   const config = JSON.parse(await fs.readFile(path.join(ROOT, 'src/data/site.json'), 'utf8'));
-  return siteSettings(config, { url: process.env.SITE_URL, basePath: process.env.BASE_PATH });
+  return siteSettings(config, {
+    url: process.env.SITE_URL,
+    basePath: process.env.BASE_PATH,
+    integrations: { giscusEnabled: process.env.GISCUS_ENABLED, goatcounterSite: process.env.GOATCOUNTER_SITE },
+  });
 }
 
 export function isPreview() {

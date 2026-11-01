@@ -46,6 +46,14 @@
 .article-related h2 { font-size: 16px; margin-bottom: 16px; }
 .article-related a { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; font-size: 15px; }
 .article-related a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.post-views { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.article-comments { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); }
+.comments-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 24px; }
+.comments-heading h2 { font-size: 18px; font-weight: 600; }
+.comments-heading > span, .comments-fallback { font-size: 12px; color: var(--secondary); }
+.comments-fallback { margin-top: 16px; }
+.comments-fallback a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
+.article-comments .giscus { min-height: 200px; }
 .no-posts { color: var(--secondary); padding: 28px 0; }
 .not-found { padding-block: 80px; }
 .not-found h1 { font-size: 30px; margin-bottom: 20px; }

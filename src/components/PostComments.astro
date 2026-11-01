@@ -1,0 +1,11 @@
+---
+const { settings, integration } = Astro.props;
+const discussionUrl = integration ? `https://github.com/${integration.repo}/discussions/categories/${encodeURIComponent(integration.category.toLowerCase())}` : '';
+---
+
+{integration && <section class="article-comments" aria-labelledby="comments-title" data-comments data-production-origin={settings.url} data-repo={integration.repo} data-repo-id={integration.repoId} data-category={integration.category} data-category-id={integration.categoryId}>
+  <div class="comments-heading"><h2 id="comments-title">댓글</h2><span>GitHub 계정으로 작성</span></div>
+  <div class="giscus" data-comments-mount></div>
+  <p class="comments-fallback"><a href={discussionUrl} target="_blank" rel="noopener noreferrer">GitHub에서 댓글 보기 <span aria-hidden="true">↗</span></a></p>
+</section>}
+<script>import '../scripts/comments.js';</script>

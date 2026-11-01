@@ -2,6 +2,9 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
+import PostViews from '../../components/PostViews.astro';
+import PostComments from '../../components/PostComments.astro';
+import { publicIntegrations } from '../../lib/integrations.js';
 import { series, seriesNames } from '../../data/navigation.js';
 import { getSite } from '../../lib/posts.js';
 
@@ -15,6 +18,7 @@ export async function getStaticPaths() {
 
 const { post, settings, preview, related } = Astro.props;
 const artwork = series.find(item => item.id === post.series);
+const integrations = publicIntegrations(settings, { preview, noindex: !post.published });
 ---
 
 <SiteLayout settings={settings} title={post.title} description={post.summary} route={`posts/${post.slug}/`} preview={preview} noindex={!post.published}>
@@ -25,7 +29,7 @@ const artwork = series.find(item => item.id === post.series);
         <p class="feature-kicker">{post.tags.join(', ')}</p>
         <h1>{post.title}</h1>
         <p class="article-deck">{post.summary}</p>
-        <div class="post-meta"><span>{settings.author}</span>{post.published ? <time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time> : <span>미발행 초안</span>}</div>
+        <div class="post-meta"><span>{settings.author}</span>{post.published ? <time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time> : <span>미발행 초안</span>}<PostViews settings={settings} slug={post.slug} integration={integrations.goatcounter} /></div>
       </header>
       <figure class="article-cover">
         <img src={settings.urlFor(artwork.cover)} width="1200" height="600" alt={artwork.imageAlt} decoding="async" fetchpriority="high" />
@@ -34,6 +38,7 @@ const artwork = series.find(item => item.id === post.series);
       {post.headings.length > 0 && <details class="mobile-toc"><summary>목차</summary><nav aria-label="본문 목차"><TableOfContents headings={post.headings} /></nav></details>}
       <div class="article-body" set:html={post.html} />
       <RelatedPosts posts={related} settings={settings} series={post.series} />
+      <PostComments settings={settings} integration={integrations.giscus} />
     </div>
     {post.headings.length > 0 && <aside class="article-toc"><nav aria-label="본문 목차"><h2>목차</h2><TableOfContents headings={post.headings} /></nav></aside>}
   </article>

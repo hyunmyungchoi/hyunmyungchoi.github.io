@@ -124,8 +124,31 @@ GitHub가 제공하는 도메인과 저장소 하위 경로를 자동 적용합�
 
 GitHub 공식 안내상 push 후 사이트 반영에는 최대 10분이 걸릴 수 있습니다. 실제 진행과 승인 대기는 저장소 Actions에서 확인하세요.
 
-## 댓글·조회수
+## 댓글과 조회수
 
-아직 giscus·GoatCounter 계정 연결이나 방문자 추적은 넣지 않았습니다. 발행 글 전체에 유효한 실제 조회수 집계가 있을 때만 가장 많이 읽은 글을 선정하며, 집계가 없으면 대표 글로 표시합니다.
+별도 DB 대신 댓글은 GitHub Discussions를 이용하는 giscus, 누적 조회는 GoatCounter를 사용합니다. 연결 값은 `src/data/site.json`의 `integrations`에서 관리합니다. 설정하지 않은 서비스의 화면과 외부 요청은 생성하지 않습니다.
+
+### 댓글 연결
+
+1. 저장소에서 Discussions를 활성화합니다.
+2. [giscus GitHub App](https://github.com/apps/giscus)을 `hyunmyungchoi.github.io` 저장소에만 설치합니다.
+3. [giscus 설정](https://giscus.app/ko)에서 저장소 ID와 Announcements 카테고리 ID를 확인합니다. 현재 저장소에서 조회한 실제 ID는 설정 파일에 들어 있습니다.
+4. 설치 확인 후 `integrations.giscus.enabled`를 `true`로 변경하고 배포합니다.
+
+글 하단에 한국어 댓글과 반응을 표시합니다. 작성자는 GitHub 로그인이 필요하며, 첫 댓글이나 반응이 있을 때 Discussion이 생성됩니다. 글 제목 대신 경로로 연결하므로 제목 수정은 댓글에 영향을 주지 않습니다. 이미 발행한 파일명과 경로는 유지하세요. 블로그의 흰색/검은색 모드에 댓글 테마도 연동합니다. 앱이 차단되어도 GitHub에서 볼 수 있는 링크를 남깁니다. `giscus.json`은 운영 도메인만 허용합니다.
+
+### 조회수 연결
+
+1. [GoatCounter](https://www.goatcounter.com/signup)에 가입하고 사이트 도메인을 `hyunmyungchoi.github.io`로 지정합니다.
+2. Settings에서 **Allow adding visitor counts on your website**를 활성화합니다. 대시보드 전체를 공개할 필요는 없습니다.
+3. `integrations.goatcounter.site`에 발급받은 `https://계정이름.goatcounter.com` 주소를 넣고 배포합니다. 비밀번호나 API 토큰은 필요하지 않습니다.
+
+글 제목 아래와 글 목록에 해당 글의 누적 조회를 표시합니다. canonical 경로로 집계하며 검색어와 URL 쿼리, 해시, 화면 안의 필터 변경과 버튼 클릭은 보내지 않습니다. 설정된 HTTPS 운영 도메인에서만 스크립트를 로드합니다. 로컬 개발, 미리보기 빌드, 초안에는 댓글과 집계를 넣지 않습니다. 광고 차단이나 API 실패 시 가짜 0 대신 `확인 불가`로 표시합니다.
+
+집계는 연결 이후부터 시작하며 이전 방문 기록은 복원하지 않습니다. GoatCounter 기본 설정은 같은 방문자의 같은 페이지 재방문을 중복 제외합니다. 공개 카운터 응답은 최대 4시간 캐시되므로 즉시 증가하지 않을 수 있습니다. 방문자의 광고 차단 설정에 따라 집계가 누락될 수 있습니다. API 토큰은 브라우저 코드에 넣지 않습니다. 테스트는 외부 서비스에 실제 방문이나 댓글을 전송하지 않습니다.
+
+`GISCUS_ENABLED=true|false`, `GOATCOUNTER_SITE=https://계정이름.goatcounter.com` 환경 변수로 연결 설정을 덮어쓸 수도 있습니다. `src/data/views.json` 기반 인기 글 선정은 기존 기능이며 자동 동기화는 별도입니다. 현재 홈의 연재 순서는 조회수로 바꾸지 않습니다.
+
+공식 자료: [giscus](https://giscus.app/ko), [공개 카운터 설정과 반영 지연](https://www.goatcounter.com/help/visitor-counter), [중복 방문 처리](https://www.goatcounter.com/help/sessions).
 
 공식 자료: [Astro 컴포넌트](https://docs.astro.build/en/basics/astro-components/), [일반 JavaScript](https://docs.astro.build/en/guides/client-side-scripts/), [GitHub Pages 배포](https://docs.astro.build/en/guides/deploy/github/), [배포 반영 시간](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#viewing-your-published-site).
