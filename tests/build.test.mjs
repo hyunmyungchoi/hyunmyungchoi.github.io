@@ -58,6 +58,21 @@ for (const basePath of ['', '/journal']) test(`Astro public build works at ${bas
   assert.equal(home('.sidebar [data-topic="Docker"] .topic-count').text(), '0');
   assert.equal(home('#home .post').length, 0);
   assert.equal(home('#home .home-feature').length, 1);
+  assert.equal(home('#home > .author-profile').length, 1);
+  assert.equal(home('#author-name').text(), '눅눅이');
+  assert.equal(home('.author-bio').text(), '직접 만들며 알게 된 것들을 기록합니다.');
+  assert.equal(home('.author-github').attr('href'), 'https://github.com/hyunmyungchoi');
+  assert.equal(home('.author-github').attr('rel'), 'noopener noreferrer');
+  assert.equal(home('.author-github-handle').text(), 'hyunmyungchoi');
+  const avatar = home('.author-avatar img');
+  assert.equal(avatar.attr('width'), '800');
+  assert.ok(avatar.attr('alt'));
+  assert.ok(avatar.attr('src').startsWith(`${basePath}/_astro/`));
+  assert.ok(avatar.attr('src').endsWith('.webp'));
+  const avatarFile = path.join(result.directory, avatar.attr('src').slice(basePath.length));
+  assert.ok((await fs.stat(avatarFile)).size < 100_000, 'profile image should stay under 100 KB');
+  assert.equal(home('#latest .author-profile').length, 0);
+  assert.equal(home('.site-header.profile-header').length, 1);
   assert.equal(home('#home-title').text(), '본문 테스트');
   assert.equal(home('.feature-summary').text(), '정적 본문 생성 검증');
   assert.equal(home('.feature-artwork img').attr('src'), `${basePath}/assets/series-operations-editorial.svg`);
@@ -89,6 +104,7 @@ for (const basePath of ['', '/journal']) test(`Astro public build works at ${bas
   assert.deepEqual(home('#series img').toArray().map(element => home(element).attr('src')), series.map(item => `${basePath}/${item.cover}`));
   assert.equal(home('dialog').length, 0);
   assert.equal(article('h1').text(), '본문 테스트');
+  assert.equal(article('.author-profile, .profile-header').length, 0);
   assert.equal(article('.article-cover img').length, 1);
   assert.equal(article('.article-cover img').attr('width'), '1200');
   assert.equal(article('.article-cover img').attr('height'), '600');
@@ -193,6 +209,6 @@ test('home shows a selected feature, then newest other posts; no draft or duplic
   assert.equal(home('.home-recent-list a[href$="/promotion-start/"]').length, 0);
   assert.equal(home('#post-list > .post').length, 3);
   assert.doesNotMatch(home('#home').text(), /PRIVATE_HOME_DRAFT/);
-  const order = home('#home > section').toArray().map(el => home(el).attr('class'));
+  const order = home('#home .home-content > section').toArray().map(el => home(el).attr('class'));
   assert.deepEqual(order, ['home-feature', 'home-recent', 'series-spotlight', 'home-index']);
 });

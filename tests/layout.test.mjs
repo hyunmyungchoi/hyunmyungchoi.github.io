@@ -124,7 +124,7 @@ test('editorial typography stays separate from body text and does not add a mark
 
 test('home prioritizes real article titles before series and clickable INDEX without draft widgets', async () => {
   const source = await read('src/pages/index.astro');
-  const home = source.match(/<div class="home-page shell"([\s\S]*?)<\/div>/)[1];
+  const home = source.match(/<div class="home-content">([\s\S]*?)<\/div>/)[1];
   assert.match(home, /SeriesGallery/);
   assert.match(home, /HomeIndex/);
   assert.ok(home.indexOf('<FeaturedPost') < home.indexOf('<HomeRecent'));
@@ -141,6 +141,28 @@ test('home prioritizes real article titles before series and clickable INDEX wit
   assert.match(index, /<h2 id="home-index-title">INDEX<\/h2>/);
   assert.match(index, /href=\{`#topic\/\$\{encodeURIComponent\(topic\)\}`\}/);
   assert.doesNotMatch(index, /data-topic=|<button/);
+});
+
+test('approved author profile is home-only and moves above content on narrow screens', async () => {
+  const page = await read('src/pages/index.astro');
+  assert.match(page, /class="home-page shell home-with-profile" id="home"/);
+  assert.ok(page.indexOf('<AuthorProfile') < page.indexOf('<div class="home-content">'));
+  assert.ok(page.indexOf('<PostFeed') > page.indexOf('<HomeIndex'));
+  assert.doesNotMatch(await read('src/pages/posts/[slug].astro'), /AuthorProfile/);
+  const profile = await read('src/components/AuthorProfile.astro');
+  assert.match(profile, /getImage\(\{ src: character, width: 800, format: 'webp', quality: 80 \}\)/);
+  assert.match(profile, /aria-labelledby="author-name"/);
+  assert.match(profile, /rel="noopener noreferrer"/);
+  const css = await read('src/styles/author-profile.css');
+  assert.match(css, /grid-template-columns: 184px minmax\(0, 1fr\)/);
+  assert.match(css, /position: sticky; top: 128px/);
+  assert.match(css, /max-width: 1179px/);
+  assert.match(css, /\.author-profile \{ position: static; display: grid/);
+  assert.match(css, /--avatar-size: 64px/);
+  assert.match(css, /max-width: 760px/);
+  assert.doesNotMatch(css, /\.article-|\.layout|\.feed/);
+  const author = JSON.parse(await read('src/data/author.json'));
+  assert.deepEqual(author, { intro: '직접 만들며 알게 된 것들을 기록합니다.', github: 'https://github.com/hyunmyungchoi' });
 });
 
 test('hover, keyboard focus and reduced-motion remain accessible', async () => {

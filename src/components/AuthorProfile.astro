@@ -1,0 +1,23 @@
+---
+import { getImage } from 'astro:assets';
+import character from '../assets/author-character.png';
+import author from '../data/author.json';
+
+const { settings } = Astro.props;
+const avatar = await getImage({ src: character, width: 800, format: 'webp', quality: 80 });
+const handle = new URL(author.github).pathname.replace(/^\/+|\/+$/g, '');
+---
+
+<aside class="author-profile" aria-labelledby="author-name">
+  <div class="author-avatar">
+    <img src={avatar.src} {...avatar.attributes} alt="안경과 헤드폰을 쓴 남색 셔츠 캐릭터" loading="eager" decoding="async" />
+  </div>
+  <div class="author-copy">
+    <h2 id="author-name">{settings.author}</h2>
+    <p class="author-bio">{author.intro}</p>
+    <a class="author-github" href={author.github} target="_blank" rel="noopener noreferrer" aria-label={`${settings.author} GitHub 프로필 열기`}>
+      <span class="author-github-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 3.5-.4 6.5-1.7 6.5-7a5.5 5.5 0 0 0-1.5-3.8c.2-.9.1-2.3-.5-3.7 0 0-1.5-.4-4 1.5a13 13 0 0 0-7 0C5.5.6 4 1 4 1c-.6 1.4-.7 2.8-.5 3.7A5.5 5.5 0 0 0 2 8.5c0 5.3 3 6.6 6.5 7-.6.6-.6 1.2-.5 2V21" /></svg>GitHub <span aria-hidden="true">↗</span></span>
+      <span class="author-github-handle">{handle}</span>
+    </a>
+  </div>
+</aside>

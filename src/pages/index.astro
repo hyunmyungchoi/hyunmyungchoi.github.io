@@ -5,6 +5,7 @@ import HomeIndex from '../components/HomeIndex.astro';
 import PostFeed from '../components/PostFeed.astro';
 import FeaturedPost from '../components/FeaturedPost.astro';
 import HomeRecent from '../components/HomeRecent.astro';
+import AuthorProfile from '../components/AuthorProfile.astro';
 import { getSite } from '../lib/posts.js';
 import { selectHomePosts } from '../lib/home.js';
 
@@ -12,13 +13,16 @@ const { settings, posts, preview, featured } = await getSite();
 const home = selectHomePosts(posts, featured?.slug);
 ---
 
-<SiteLayout settings={settings} preview={preview}>
+<SiteLayout settings={settings} preview={preview} profileHeader>
   <noscript slot="head"><style is:inline>#latest[hidden] { display: block !important; } .search, .filter-state, .series-controls { display: none !important; }</style></noscript>
-  <div class="home-page shell" id="home">
-    <FeaturedPost post={home.featured} settings={settings} preview={preview} />
-    <HomeRecent posts={home.recent} settings={settings} />
-    <SeriesGallery settings={settings} />
-    <HomeIndex />
+  <div class="home-page shell home-with-profile" id="home">
+    <AuthorProfile settings={settings} />
+    <div class="home-content">
+      <FeaturedPost post={home.featured} settings={settings} preview={preview} />
+      <HomeRecent posts={home.recent} settings={settings} />
+      <SeriesGallery settings={settings} />
+      <HomeIndex />
+    </div>
   </div>
   <PostFeed posts={posts} settings={settings} />
   <script>import '../scripts/home.js';</script>

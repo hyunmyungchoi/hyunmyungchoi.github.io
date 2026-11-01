@@ -82,6 +82,8 @@ PDF 첨부는 `src/content/attachments/`에 넣고 본문에서 상대 경로로
 | `src/content/images/` | 본문 이미지 |
 | `src/content/attachments/` | 본문에서 다운로드할 PDF 첨부 |
 | `src/data/site.json` | 이름·작성자·도메인 |
+| `src/data/author.json` | 홈 프로필 소개와 GitHub 주소 |
+| `src/assets/author-character.png` | 홈 프로필 캐릭터 원본 |
 | `src/data/navigation.js` | 다섯 연재의 순서·이름·기술 분류·소개 문장·표지 경로, INDEX 목록 |
 | `src/data/views.json` | 추후 실제 조회수 데이터 |
 | `src/lib/` | 글 검증·Markdown 변환·안전한 경로 처리 |
@@ -92,6 +94,8 @@ PDF 첨부는 `src/content/attachments/`에 넣고 본문에서 상대 경로로
 | `tests/` | 단위·실제 Astro 빌드 테스트 |
 
 `dist/`, `.preview/`, `.astro/`는 생성물이므로 편집하지 않습니다.
+
+홈 프로필은 1180px 이상에서 왼쪽에 고정되고, 좁은 화면에서는 콘텐츠 위에 배치됩니다. 글 목록과 본문에는 프로필 열을 추가하지 않습니다. 이름은 `src/data/site.json`의 `author`, 소개와 GitHub 주소는 `src/data/author.json`에서 수정합니다. `AuthorProfile.astro`가 캐릭터를 800px WebP로 최적화하고, `author-profile.css`에서 원본 첫 번째 포즈를 원형으로 잘라 표시합니다. 원본 이미지는 변경하지 않습니다.
 
 홈은 **대표 글 → 최신 글 → 연재 → INDEX** 순서입니다. 대표 글은 실제 발행 글의 제목, 요약, 기술 태그와 작은 표지로 구성합니다. 같은 글을 최신 목록에 반복하지 않으며, 다른 발행 글이 생기면 최신 3편까지 날짜순으로 자동 표시합니다. 발행 글이 없으면 빈 상태로 안내하고, 미리보기에서도 홈의 대표 글과 최신 목록에는 미발행 초안을 넣지 않습니다. 선택 로직은 `src/lib/home.js`, 화면은 `FeaturedPost.astro`와 `HomeRecent.astro`에서 관리합니다. 제목은 명조체, 본문과 짧은 설명은 고딕체로 분리하고 새로운 외부 폰트 요청은 추가하지 않았습니다.
 

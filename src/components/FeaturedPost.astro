@@ -15,7 +15,7 @@ const integrations = publicIntegrations(settings, { preview });
       <p class="feature-kicker">{post.tags.join(' / ')}</p>
       <h1 id="home-title"><a class="feature-title-link" href={href}>{post.title}</a></h1>
       <p class="feature-summary">{post.summary}</p>
-      <div class="feature-meta"><span>{settings.author}</span><time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time><PostViews settings={settings} slug={post.slug} integration={integrations.goatcounter} /></div>
+      <div class="feature-meta"><time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time><PostViews settings={settings} slug={post.slug} integration={integrations.goatcounter} /></div>
       <a class="text-link feature-action" href={href}>글 읽기 <span aria-hidden="true">→</span></a>
     </div>
     <a class="feature-artwork" href={href} tabindex="-1" aria-hidden="true">
