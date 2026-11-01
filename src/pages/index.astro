@@ -3,15 +3,20 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import SeriesGallery from '../components/SeriesGallery.astro';
 import HomeIndex from '../components/HomeIndex.astro';
 import PostFeed from '../components/PostFeed.astro';
+import FeaturedPost from '../components/FeaturedPost.astro';
+import HomeRecent from '../components/HomeRecent.astro';
 import { getSite } from '../lib/posts.js';
+import { selectHomePosts } from '../lib/home.js';
 
-const { settings, posts, preview } = await getSite();
+const { settings, posts, preview, featured } = await getSite();
+const home = selectHomePosts(posts, featured?.slug);
 ---
 
 <SiteLayout settings={settings} preview={preview}>
   <noscript slot="head"><style is:inline>#latest[hidden] { display: block !important; } .search, .filter-state, .series-controls { display: none !important; }</style></noscript>
   <div class="home-page shell" id="home">
-    <h1 class="home-title" id="home-title">연재</h1>
+    <FeaturedPost post={home.featured} settings={settings} preview={preview} />
+    <HomeRecent posts={home.recent} settings={settings} />
     <SeriesGallery settings={settings} />
     <HomeIndex />
   </div>

@@ -3,19 +3,20 @@ import { series } from '../data/navigation.js';
 const { settings } = Astro.props;
 ---
 
-<section class="series-spotlight" id="series" aria-labelledby="home-title" aria-roledescription="carousel">
+<section class="series-spotlight" id="series" aria-labelledby="series-heading" aria-roledescription="carousel">
+  <div class="home-section-heading"><h2 id="series-heading">연재</h2></div>
   <div class="series-track" id="series-track" tabindex="0" aria-label="연재 표지, 좌우 방향키로 이동">
     {series.map((item, index) => (
       <div class="series-panel" id={`panel-${item.id}`} role="group" aria-roledescription="slide" aria-label={`${index + 1} / ${series.length} · ${item.title}`} data-current={String(index === 0)}>
         <a class="home-series-entry" href={`#series/${item.id}`} aria-labelledby={`series-${item.id}-title`} aria-describedby={`series-${item.id}-disciplines series-${item.id}-sentence`} draggable="false">
           <span class="series-cover">
-            <img src={settings.urlFor(item.cover)} width="1200" height="600" alt={item.imageAlt} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" fetchpriority={index === 0 ? 'high' : 'auto'} draggable="false" />
+            <img src={settings.urlFor(item.cover)} width="1200" height="600" alt={item.imageAlt} loading="lazy" decoding="async" draggable="false" />
           </span>
           <div class="series-caption">
             <span class="series-eyebrow" id={`series-${item.id}-disciplines`}>
               {item.disciplines.map((discipline, i) => <><span>{discipline}</span>{i < item.disciplines.length - 1 && <span class="discipline-separator" aria-hidden="true">·</span>}</>)}
             </span>
-            <h2 id={`series-${item.id}-title`}>{item.title}</h2>
+            <h3 id={`series-${item.id}-title`}>{item.title}</h3>
             <p id={`series-${item.id}-sentence`}>{item.sentence}</p>
             <span class="series-open" aria-hidden="true">연재 읽기 <svg viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></span>
           </div>

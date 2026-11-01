@@ -1,27 +1,26 @@
 ---
-import NodeDiagram from './NodeDiagram.astro';
-import { seriesNames } from '../data/navigation.js';
-const { post, ranked, settings, preview } = Astro.props;
+import { series, seriesNames } from '../data/navigation.js';
+import PostViews from './PostViews.astro';
+import { publicIntegrations } from '../lib/integrations.js';
+const { post, settings, preview } = Astro.props;
+const artwork = post && series.find(item => item.id === post.series);
 const href = post ? settings.urlFor(`posts/${post.slug}/`) : '';
+const integrations = publicIntegrations(settings, { preview });
 ---
 
 <section class="home-feature" aria-labelledby="home-title">
-  <div class="feature-topline">
-    <p class="feature-heading"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16V10m6 6V4m6 12V7" /></svg>{ranked ? '가장 많이 읽은 글' : '대표 글'}</p>
-    <span class="feature-stat" id="feature-views">{ranked ? `누적 조회 ${ranked.views.toLocaleString('ko-KR')}` : preview ? '초안 미리보기 · 조회수 미연동' : '조회수 집계 미연동'}</span>
-  </div>
-  <div>
-    {post && <p class="feature-kicker">{post.tags.join(' · ')}</p>}
-    <h1 id="home-title">{post ? <a class="title-button" href={href}>{post.title}</a> : '아직 발행된 글이 없습니다.'}</h1>
-    <p class="feature-summary">{post ? post.summary : '발행된 글은 이곳에 표시됩니다.'}</p>
-    {post && <a class="text-link feature-action" href={href}>글 읽기 <span aria-hidden="true">→</span></a>}
-  </div>
-  {post && <figure class="network-figure">
-    <a class="feature-illustration" href={href} aria-label="대표 글 읽기">
-      {post.slug === 'pod-cross-node'
-        ? <NodeDiagram />
-        : <img id="feature-cover" src={settings.urlFor(`assets/series-${post.series}.svg`)} alt={seriesNames[post.series]} width="480" height="160" />}
+  <div class="feature-topline"><p class="feature-heading">대표 글</p><a class="text-link" href="#latest">모든 글 보기 <span aria-hidden="true">↗</span></a></div>
+  {post ? <div class="feature-grid">
+    <div class="feature-copy">
+      <p class="feature-kicker">{post.tags.join(' / ')}</p>
+      <h1 id="home-title"><a class="feature-title-link" href={href}>{post.title}</a></h1>
+      <p class="feature-summary">{post.summary}</p>
+      <div class="feature-meta"><span>{settings.author}</span><time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time><PostViews settings={settings} slug={post.slug} integration={integrations.goatcounter} /></div>
+      <a class="text-link feature-action" href={href}>글 읽기 <span aria-hidden="true">→</span></a>
+    </div>
+    <a class="feature-artwork" href={href} tabindex="-1" aria-hidden="true">
+      <img src={settings.urlFor(artwork.cover)} alt="" width="1200" height="600" decoding="async" fetchpriority="high" />
+      <span>{seriesNames[post.series]}</span>
     </a>
-    <figcaption>{post.slug === 'pod-cross-node' ? '노드 간 전달 경로 · 단순화' : '연재 대표 이미지'}</figcaption>
-  </figure>}
+  </div> : <h1 class="home-empty-title" id="home-title">아직 발행된 글이 없습니다.</h1>}
 </section>

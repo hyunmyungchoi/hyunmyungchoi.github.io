@@ -53,7 +53,8 @@ test('five series covers are self-contained lightweight SVG assets', async () =>
   }
   const source = await read('src/components/SeriesGallery.astro');
   assert.match(source, /width="1200" height="600"/);
-  assert.match(source, /'eager' : 'lazy'/);
+  assert.match(source, /loading="lazy"/);
+  assert.match(await read('src/components/FeaturedPost.astro'), /fetchpriority="high"/);
   assert.match(source, /item.shortTitle/);
   assert.doesNotMatch(await read('src/styles/home.css'), /grayscale/);
 });
@@ -87,12 +88,12 @@ test('technical classification is accessible and the hero keeps a compact two-to
   const css = await read('src/styles/home.css');
   assert.match(css, /aspect-ratio: 2 \/ 1/);
   assert.match(css, /font-family: var\(--technical-font\)/);
-  assert.match(css, /\.home-page \{ padding-top: 14px/);
+  assert.match(css, /\.home-page \{ padding-top: 26px/);
 });
 
 test('carousel exposes adjacent slides and uses native scroll snap without autoplay', async () => {
   const css = await read('src/styles/home.css');
-  assert.match(css, /flex: 0 0 62%/);
+  assert.match(css, /flex: 0 0 40%/);
   assert.match(css, /scroll-snap-type: x mandatory/);
   assert.match(css, /overflow-x: auto/);
   assert.match(css, /max-width: 760px/);
@@ -116,16 +117,25 @@ test('editorial typography stays separate from body text and does not add a mark
   assert.match(css, /font-family: var\(--display-font\)/);
   assert.doesNotMatch(css, /linear-gradient|box-shadow:/);
   const page = await read('src/pages/index.astro');
-  assert.match(page, /class="home-title" id="home-title">연재/);
+  assert.match(page, /FeaturedPost post=\{home.featured\}/);
+  assert.match(await read('src/components/FeaturedPost.astro'), /<h1 id="home-title">/);
   assert.doesNotMatch(page, /hero-intro|tagline|manifesto/);
 });
 
-test('home contains a series spotlight and clickable INDEX, not draft or feed widgets', async () => {
+test('home prioritizes real article titles before series and clickable INDEX without draft widgets', async () => {
   const source = await read('src/pages/index.astro');
   const home = source.match(/<div class="home-page shell"([\s\S]*?)<\/div>/)[1];
   assert.match(home, /SeriesGallery/);
   assert.match(home, /HomeIndex/);
-  assert.doesNotMatch(home, /FeaturedPost|PostCard|PostFeed|TopicIndex|ProfileLinks|최근 글|조회수|초안|대표 글/);
+  assert.ok(home.indexOf('<FeaturedPost') < home.indexOf('<HomeRecent'));
+  assert.ok(home.indexOf('<HomeRecent') < home.indexOf('<SeriesGallery'));
+  assert.ok(home.indexOf('<SeriesGallery') < home.indexOf('<HomeIndex'));
+  assert.doesNotMatch(home, /PostCard|PostFeed|TopicIndex|ProfileLinks|초안/);
+  const feature = await read('src/components/FeaturedPost.astro');
+  assert.match(feature, /post.title/);
+  assert.match(feature, /post.summary/);
+  assert.match(feature, /PostViews/);
+  assert.doesNotMatch(feature, /series-\$\{post.series\}\.svg|가장 많이 읽은 글|조회수 미연동|NodeDiagram/);
   assert.doesNotMatch(await read('src/components/SiteFooter.astro'), /미발행 초안 포함/);
   const index = await read('src/components/HomeIndex.astro');
   assert.match(index, /<h2 id="home-index-title">INDEX<\/h2>/);
@@ -138,7 +148,7 @@ test('hover, keyboard focus and reduced-motion remain accessible', async () => {
   const rule = css.match(/\.theme-button \{([^}]+)\}/)[1];
   assert.match(rule, /width: 44px/);
   assert.match(rule, /height: 44px/);
-  assert.match(css, /home-series-entry:focus-visible h2/);
+  assert.match(css, /home-series-entry:focus-visible h3/);
   assert.match(css, /hover: hover/);
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /transform: none/);

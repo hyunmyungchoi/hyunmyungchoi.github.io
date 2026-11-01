@@ -11,11 +11,13 @@ a, button { transition: color 160ms ease, background-color 160ms ease, border-co
 .post { position: relative; isolation: isolate; }
 .post::before { content: ""; position: absolute; inset: 3px -12px; border-radius: 4px; background: var(--surface); opacity: 0; transition: opacity 180ms ease; z-index: -1; pointer-events: none; }
 .post:focus-within::before { opacity: 1; }
-.home-series-entry:focus-visible h2 { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.home-series-entry:focus-visible h3, .recent-link:focus-visible h3 { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.feature-title-link:focus-visible { text-decoration-color: currentColor; }
 @media (hover: hover) and (pointer: fine) {
   .nav a:hover::after { transform: scaleX(1); }
   .theme-button:hover { background: var(--surface); }
-  .home-series-entry:hover h2 { text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 1px; }
+  .home-series-entry:hover h3, .recent-link:hover h3 { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+  .feature-title-link:hover { text-decoration-color: currentColor; }
   .home-series-entry:hover .series-cover img { transform: scale(1.015); }
   .home-series-entry:hover .series-open svg, .home-topic-link:hover svg { transform: translateX(4px); }
   .series-select:hover > span { color: var(--ink); border-color: var(--line); }

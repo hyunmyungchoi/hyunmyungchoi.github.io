@@ -7,11 +7,11 @@ import { load } from 'cheerio';
 import { series } from '../src/data/navigation.js';
 
 const root = process.cwd();
-async function build(name, { preview = false, basePath = '', fixtures = true, requirePosts = false, site = 'https://example.github.io', integrations = false } = {}) {
+async function build(name, { preview = false, basePath = '', fixtures = true, requirePosts = false, site = 'https://example.github.io', integrations = false, contentDirectory } = {}) {
   const result = await new Promise((resolve, reject) => {
     const child = spawn(process.execPath, ['scripts/build.mjs', ...(preview ? ['--preview'] : []), ...(requirePosts ? ['--require-posts'] : [])], {
       cwd: root,
-      env: { ...process.env, SITE_URL: site, BASE_PATH: basePath, BLOG_OUTPUT: '.test-output/' + name, BLOG_CONTENT_DIR: fixtures ? 'tests/fixtures/posts' : 'tests/fixtures/drafts', ASTRO_TELEMETRY_DISABLED: '1', GISCUS_ENABLED: String(integrations), GOATCOUNTER_SITE: integrations ? 'https://example.goatcounter.com' : '' },
+      env: { ...process.env, SITE_URL: site, BASE_PATH: basePath, BLOG_OUTPUT: '.test-output/' + name, BLOG_CONTENT_DIR: contentDirectory || (fixtures ? 'tests/fixtures/posts' : 'tests/fixtures/drafts'), ASTRO_TELEMETRY_DISABLED: '1', GISCUS_ENABLED: String(integrations), GOATCOUNTER_SITE: integrations ? 'https://example.goatcounter.com' : '' },
     });
     let output = '';
     child.stdout.on('data', data => { output += data; });
@@ -56,7 +56,12 @@ for (const basePath of ['', '/journal']) test(`Astro public build works at ${bas
   assert.equal(home('.sidebar .topic-button').length, 9);
   assert.equal(home('.sidebar [data-topic="Linux"] .topic-count').text(), '1');
   assert.equal(home('.sidebar [data-topic="Docker"] .topic-count').text(), '0');
-  assert.equal(home('#home .post, #home .home-feature').length, 0);
+  assert.equal(home('#home .post').length, 0);
+  assert.equal(home('#home .home-feature').length, 1);
+  assert.equal(home('#home-title').text(), '본문 테스트');
+  assert.equal(home('.feature-summary').text(), '정적 본문 생성 검증');
+  assert.equal(home('.feature-artwork img').attr('src'), `${basePath}/assets/series-operations-editorial.svg`);
+  assert.equal(home('.home-recent').length, 0);
   assert.equal(home('#home .series-panel:not([hidden])').length, 5);
   assert.equal(home('#series[aria-roledescription="carousel"]').length, 1);
   assert.equal(home('#home .series-select[aria-current="true"]').attr('data-series-select'), '0');
@@ -72,7 +77,7 @@ for (const basePath of ['', '/journal']) test(`Astro public build works at ${bas
   assert.equal(home('#home .home-topic-link').length, 9);
   assert.equal(home('#home-index-title').text(), 'INDEX');
   assert.ok(home('#home .home-topic-link').toArray().every(element => home(element).attr('href').startsWith('#topic/')));
-  assert.deepEqual(home('#home .series-caption h2').toArray().map(element => home(element).text()), series.map(item => item.title));
+  assert.deepEqual(home('#home .series-caption h3').toArray().map(element => home(element).text()), series.map(item => item.title));
   for (const item of series) {
     const label = home('#series-' + item.id + '-disciplines');
     assert.ok(item.disciplines.every(value => label.text().includes(value)));
@@ -81,7 +86,7 @@ for (const basePath of ['', '/journal']) test(`Astro public build works at ${bas
     assert.ok(home('#panel-' + item.id + ' a').attr('aria-describedby').includes(label.attr('id')));
   }
   assert.equal(home('#home .series-caption p').length, 5);
-  assert.deepEqual(home('#home img').toArray().map(element => home(element).attr('src')), series.map(item => `${basePath}/${item.cover}`));
+  assert.deepEqual(home('#series img').toArray().map(element => home(element).attr('src')), series.map(item => `${basePath}/${item.cover}`));
   assert.equal(home('dialog').length, 0);
   assert.equal(article('h1').text(), '본문 테스트');
   assert.equal(article('.article-cover img').length, 1);
@@ -166,6 +171,7 @@ test('configured comments and counters render on public posts, not the homepage 
   assert.equal(article('[data-comments]').attr('data-repo'), 'hyunmyungchoi/hyunmyungchoi.github.io');
   assert.equal(article('.article-heading [data-view-path]').attr('data-view-path'), '/journal/posts/example/');
   assert.equal(home('#post-list [data-view-path]').attr('data-view-path'), '/journal/posts/example/');
+  assert.equal(home('.home-feature [data-view-path]').attr('data-view-path'), '/journal/posts/example/');
   assert.equal(article('[data-analytics-site]').attr('data-analytics-site'), 'https://example.goatcounter.com');
   assert.equal(home('[data-analytics-site]').length, 1);
   assert.equal(article('[data-view-value]').text(), '—');
@@ -175,4 +181,18 @@ test('configured comments and counters render on public posts, not the homepage 
     const page = load(await fs.readFile(path.join(preview.directory, filename), 'utf8'));
     assert.equal(page('[data-comments], [data-view-site], [data-analytics-site]').length, 0);
   }
+});
+
+test('home shows a selected feature, then newest other posts; no draft or duplicate appears in the home selection', async () => {
+  const result = await build('home-reading', { contentDirectory: 'tests/fixtures/home-posts', basePath: '/journal' });
+  assert.equal(result.code, 0, result.output);
+  const home = await checkLocalLinks(result.directory, 'index.html', '/journal');
+  assert.equal(home('#home-title').text(), '홈 대표 글 검증');
+  assert.equal(home('#home-title a').attr('href'), '/journal/posts/promotion-start/');
+  assert.deepEqual(home('.recent-link h3').toArray().map(el => home(el).text()), ['새로운 변경 검증', '이전 기록 검증']);
+  assert.equal(home('.home-recent-list a[href$="/promotion-start/"]').length, 0);
+  assert.equal(home('#post-list > .post').length, 3);
+  assert.doesNotMatch(home('#home').text(), /PRIVATE_HOME_DRAFT/);
+  const order = home('#home > section').toArray().map(el => home(el).attr('class'));
+  assert.deepEqual(order, ['home-feature', 'home-recent', 'series-spotlight', 'home-index']);
 });

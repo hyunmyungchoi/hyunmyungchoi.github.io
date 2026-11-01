@@ -1,0 +1,21 @@
+---
+import { seriesNames } from '../data/navigation.js';
+const { posts, settings } = Astro.props;
+---
+
+{posts.length > 0 && <section class="home-recent" aria-labelledby="home-recent-title">
+  <div class="home-section-heading"><h2 id="home-recent-title">최신 글</h2><a class="text-link" href="#latest">모든 글 보기 <span aria-hidden="true">↗</span></a></div>
+  <ul class="home-recent-list">
+    {posts.map(post => <li>
+      <article class="recent-entry">
+        <div class="recent-meta"><time datetime={post.publishedAt}>{post.publishedAt.replaceAll('-', '.')}</time><span>{seriesNames[post.series]}</span></div>
+        <a class="recent-link" href={settings.urlFor(`posts/${post.slug}/`)}>
+          <h3>{post.title}</h3>
+          <p>{post.summary}</p>
+          <span class="recent-tags">{post.tags.join(' / ')}</span>
+        </a>
+        <span class="recent-arrow" aria-hidden="true">↗</span>
+      </article>
+    </li>)}
+  </ul>
+</section>}
