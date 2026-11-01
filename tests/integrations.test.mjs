@@ -64,6 +64,7 @@ test('counter fetch uses the exact encoded canonical path with no cookies or ref
 test('missing pages, blocked fetches, invalid JSON and malformed counters remain unavailable, not zero', async () => {
   for (const fetcher of [
     async () => ({ ok: false, status: 404 }),
+    async () => ({ ok: false, status: 404, json: async () => ({ count: '12' }) }),
     async () => { throw new Error('Blocked'); },
     async () => ({ ok: true, json: async () => { throw new Error('Invalid JSON'); } }),
     async () => ({ ok: true, json: async () => ({ count: '-1' }) }),
@@ -73,6 +74,13 @@ test('missing pages, blocked fetches, invalid JSON and malformed counters remain
     assert.equal(element.value.textContent, '확인 불가');
     assert.equal(element.dataset.viewState, 'unavailable');
   }
+});
+
+test('a new GoatCounter path explicitly returning 404 and count zero displays measured zero', async () => {
+  const element = counterElement();
+  await showViews(element, async () => ({ ok: false, status: 404, json: async () => ({ count: '0' }) }));
+  assert.equal(element.value.textContent, '0');
+  assert.equal(element.dataset.viewState, 'empty');
 });
 
 test('analytics loads once on production, excludes query/hash, and does nothing on localhost', () => {

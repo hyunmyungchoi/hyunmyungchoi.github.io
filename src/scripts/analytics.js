@@ -16,11 +16,13 @@ export async function showViews(element, fetchCount = fetch) {
     const response = await fetchCount(`${element.dataset.viewSite}/counter/${encodeURIComponent(element.dataset.viewPath)}.json`, {
       credentials: 'omit', referrerPolicy: 'no-referrer', signal: AbortSignal.timeout(6000),
     });
-    if (!response.ok) throw new Error('Counter unavailable');
     const count = parseVisitorCount((await response.json()).count);
+    // 새 경로는 첫 집계 전 404와 count: "0"을 반환합니다. 다른 오류는 0으로 간주하지 않습니다.
+    const empty = response.status === 404 && count === 0;
+    if (!response.ok && !empty) throw new Error('Counter unavailable');
     if (count === null) throw new Error('Invalid counter');
     value.textContent = count.toLocaleString('ko-KR');
-    element.dataset.viewState = 'ready';
+    element.dataset.viewState = empty ? 'empty' : 'ready';
   } catch (_) {
     value.textContent = '확인 불가';
     element.dataset.viewState = 'unavailable';
